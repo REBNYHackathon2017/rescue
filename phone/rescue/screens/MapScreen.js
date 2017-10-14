@@ -25,18 +25,16 @@ export default class MapScreen extends React.Component {
 			},
 		};
 	}
-	// changeScreen = () => {
-	// 	const { navigate } = this.props.navigation;
-	// 	navigate('Favorites');
-	// }
+	changeScreen = () => {
+		const { navigate } = this.props.navigation;
+		navigate('Resources');
+	}
 
 	render() {
-		console.log('DraggableMarkers: ', DraggableMarkers);
-		const Component = (<Text>oy</Text>);
 		return (
 			<View style={styles.container}>
 				<DraggableMarkers provider={PROVIDER_GOOGLE} />
-				<Button text="CONFIRM LOCATION" />
+				<Button onPress={this.changeScreen} text="CONFIRM LOCATION" />
 			</View>
 		);
 	}
