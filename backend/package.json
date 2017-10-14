@@ -1,0 +1,23 @@
+{
+  "name": "rescue_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --use_strict index.js",
+    "dev": "nodemon --use_strict index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "1.18.2",
+    "express": "4.16.2",
+    "nodemon": "1.12.1",
+    "nyc-bytes": "1.0.1",
+    "pg": "7.3.0",
+    "proj4": "2.4.4",
+    "q": "1.5.0",
+    "sequelize": "4.13.15",
+    "socket.io": "2.0.3"
+  }
+}
