@@ -71,12 +71,12 @@ MarkerTypes.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
+	  height: 500,
+	  width: 360,
   },
 });
 
