@@ -25,11 +25,11 @@ export default class App extends Component {
 
         return (
             <div>
-                <Navbar collapseOnSelect>
+                <Navbar>
                     <Navbar.Header>
                         <Navbar.Brand>
                             {/*<LinkContainer to="/main">*/}
-                                {/* <img src={logo} className="App-logo" alt="logo"/>   */}
+                            {/* <img src={logo} className="App-logo" alt="logo"/>   */}
                             {/*</LinkContainer>*/}
                             <a className="navbar-band" href="/main">
                                 <img src={logo} alt="logo"/>
@@ -40,33 +40,32 @@ export default class App extends Component {
                     <Navbar.Collapse>
                         <Navbar.Form pullLeft>
                             <FormGroup>
-                                <FormControl type="text" placeholder="Search" />
+                                <FormControl type="text" placeholder="Search"/>
                             </FormGroup>
                             {' '}
                             <Button type="submit"><img src={search} alt="search"/></Button>
                         </Navbar.Form>
-                        <Nav pullRight>
-                            <Navbar.Text>
-                                showing:
-                                {'  '}
-                                <Navbar.Link href="#">all</Navbar.Link>
-                                {'  |  '}
-                                <Navbar.Link href="#">pending</Navbar.Link>
-                                {'  |  '}
-                                <Navbar.Link href="#">dispatch</Navbar.Link>
-                                {'  |  '}
-                                <Navbar.Link href="#">resolved</Navbar.Link>
-                            </Navbar.Text>
+                        <Navbar.Form pullRight className="icon">
+                            showing:
+                            {'  '}
+                            <Navbar.Link href="#">all</Navbar.Link>
+                            {'  |  '}
+                            <Navbar.Link href="#">pending</Navbar.Link>
+                            {'  |  '}
+                            <Navbar.Link href="#">dispatch</Navbar.Link>
+                            {'  |  '}
+                            <Navbar.Link href="#">resolved</Navbar.Link>
+                            {'     '}
                             <a className="icon" href="/list">
                                 <img src={list} alt="list"/>
                             </a>
                             <a className="icon" href="/main">
                                 <img src={main} alt="main"/>
                             </a>
-                            <a className="icon" href="/details">
+                            <a className="icon" href="/list">
                                 <img src={details} alt="details"/>
                             </a>
-                        </Nav>
+                        </Navbar.Form>
                     </Navbar.Collapse>
                 </Navbar>
                 <div>
