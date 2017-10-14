@@ -23,6 +23,7 @@ dataset.init()
 
 	  	stream.on('data', ({ Address, NumFloors, XCoord, YCoord, ZipCode, OwnerName, HealthArea, PolicePrct, FireComp } = {}) => {
 	  		const numberOfFloors = Math.floor(Number(NumFloors));
+	  		if (Address === '335 MADISON AVENUE') console.log('ITTT', Address, NumFloors, XCoord, YCoord, ZipCode, OwnerName, HealthArea, PolicePrct, FireComp);
 	  		if (XCoord && YCoord && ZipCode && Address && numberOfFloors > 0) {
 
 	  			// Entry for the db (add zip and district)

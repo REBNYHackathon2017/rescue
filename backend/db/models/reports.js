@@ -34,21 +34,12 @@ const Reports = sequelize.define('Reports', {
 	mobile: {
 		type: Sequelize.STRING,
 		defaultValue: '6467777777'
+	},
+	name: {
+		type: Sequelize.STRING,
+		defaultValue: 'Jon Jones'
 	}
 });
-
-
-// Reports.tickState = function(_id, newLastValue, newLastTime) {
-
-// 	return Reports.update({
-// 		last_time: newLastTime,
-// 		last_value: newLastValue
-// 	}, {
-// 		where: {
-// 			_id
-// 		}
-// 	});
-// };
 
 
 module.exports = Reports;
