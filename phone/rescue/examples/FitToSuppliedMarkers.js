@@ -61,7 +61,7 @@ class FocusOnMarkers extends React.Component {
   }
 
   focusMap(markers, animated) {
-    console.log(`Markers received to populate map: ${markers}`);
+    // console.log(`Markers received to populate map: ${markers}`);
     this.map.fitToSuppliedMarkers(markers, animated);
   }
 

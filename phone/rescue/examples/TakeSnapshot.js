@@ -36,7 +36,7 @@ class MarkerTypes extends React.Component {
       latitudeDelta: 0.01,
       longitudeDelta: 0.01 * ASPECT_RATIO,
     }, (err, data) => {
-      if (err) console.log(err);
+    //   if (err) console.log(err);
       this.setState({ mapSnapshot: data });
     });
   }
