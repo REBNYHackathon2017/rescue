@@ -1,7 +1,8 @@
 import React from 'react';
 import { Picker, StyleSheet, Text, View } from 'react-native';
-
 import { SearchBar } from 'react-native-elements';
+
+import Button from '../components/CustomButton';
 
 const styles = StyleSheet.create({
 	container: {
@@ -77,6 +78,10 @@ export default class Emergency extends React.Component {
 	// 	const { navigate } = this.props.navigation;
 	// 	navigate('Map');
 	// }
+	changeToMapScreen = () => {
+		const { navigate } = this.props.navigation;
+		navigate('Map');
+	}
 
 	updateIndex = (index) => {
 		this.setState({ index })
@@ -104,6 +109,10 @@ export default class Emergency extends React.Component {
 						})
 					}
 				</Picker>
+				<Button
+					onPress={this.changeToMapScreen}
+					text="GPS MY LOCATION"
+				/>
 			</View>
 		);
 	}
