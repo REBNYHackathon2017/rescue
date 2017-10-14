@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default class MapLocation extends React.Component {
+export default class MapScreen extends React.Component {
 	changeScreen = () => {
 		const { navigate } = this.props.navigation;
 		navigate('Favorites');

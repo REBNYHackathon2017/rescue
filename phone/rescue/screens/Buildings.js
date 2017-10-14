@@ -80,7 +80,7 @@ export default class Emergency extends React.Component {
 	// }
 	changeToMapScreen = () => {
 		const { navigate } = this.props.navigation;
-		navigate('MapLocation');
+		navigate('MapScreen');
 	}
 
 	updateIndex = (index) => {
