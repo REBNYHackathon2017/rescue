@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff',
 		alignItems: 'center',
-		justifyContent: 'center',
+		justifyContent: 'space-between',
 	},
 });
 
@@ -36,6 +36,7 @@ export default class MapScreen extends React.Component {
 		return (
 			<View style={styles.container}>
 				<DraggableMarkers provider={PROVIDER_GOOGLE} />
+				<Button text="CONFIRM LOCATION" />
 			</View>
 		);
 	}
