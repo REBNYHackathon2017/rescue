@@ -13,13 +13,18 @@ const styles = StyleSheet.create({
 });
 
 export default class Emergency extends React.Component {
-  render() {
-	return (
-	  <View style={styles.container}>
-		<Text>Does your emergency pose an immediate threat to someone’s life, safety, health, or property?</Text>
-		<Button color="gray" text="NO" />
-		<Button text="YES" />
-	  </View>
-	);
-  }
+	changeScreen = () => {
+		const { navigate } = this.props.navigation;
+		navigate('Favorites');
+	}
+
+	render() {
+		return (
+			<View style={styles.container}>
+			<Text>Does your emergency pose an immediate threat to someone’s life, safety, health, or property?</Text>
+			<Button color="gray" text="NO" />
+			<Button onPress={this.changeScreen} text="YES" />
+			</View>
+		);
+	}
 }
