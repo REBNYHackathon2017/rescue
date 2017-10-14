@@ -18,7 +18,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const SPACE = 0.01;
 
 function log(eventName, e) {
-  console.log(eventName, e.nativeEvent);
+//   console.log(eventName, e.nativeEvent);
 }
 
 class MarkerTypes extends React.Component {
