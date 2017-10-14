@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
 });
 
 export default class Favorites extends React.Component {
+	changeScreen = () => {
+		const { navigate } = this.props.navigation;
+		navigate('Buildings');
+	}
 
 	render() {
 		return (
@@ -37,6 +41,7 @@ export default class Favorites extends React.Component {
 						)
 					})
 				}
+				<Button onPress={this.changeScreen} text={"NONE OF THESE"}/>
 			</View>
 		);
 	}
