@@ -5,7 +5,7 @@ import { StackNavigator } from 'react-navigation';
 import Buildings from './screens/Buildings';
 import Emergency from './screens/Emergency';
 import Favorites from './screens/Favorites';
-import MapScreen from './screens/MapLocation';
+import MapScreen from './screens/MapScreen';
 
 const Screens = StackNavigator({
 	Emergency: { screen: Emergency },
