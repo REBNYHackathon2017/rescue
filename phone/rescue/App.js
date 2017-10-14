@@ -3,9 +3,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 import Emergency from './screens/Emergency';
+import Favorites from './screens/Favorites';
 
 const Screens = StackNavigator({
 	Emergency: { screen: Emergency },
+	Favorites: { screen: Favorites },
 });
 
 export default class App extends React.Component {
