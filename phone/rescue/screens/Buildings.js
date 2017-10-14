@@ -1,6 +1,8 @@
 import React from 'react';
 import { Picker, StyleSheet, Text, View } from 'react-native';
 
+import { SearchBar } from 'react-native-elements';
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -84,6 +86,11 @@ export default class Emergency extends React.Component {
 		const { index } = this.state;
 		return (
 			<View >
+				<SearchBar
+					lightTheme
+					onChangeText={() => {}}
+					placeholder='Search for a location'
+				/>
 				<Picker selectedValue={BUILDINGS[index]} onValueChange = {this.updateIndex}>
 					{
 						BUILDINGS.map((building, i) => {
