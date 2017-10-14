@@ -11,8 +11,8 @@ import PriceMarker from './PriceMarker';
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
-const LATITUDE = 40.753836;
-const LONGITUDE = -73.9781895;
+const LATITUDE = 40.7536015;
+const LONGITUDE = -73.9802739;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const SPACE = 0.01;
