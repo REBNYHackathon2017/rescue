@@ -1,4 +1,5 @@
 import React from 'react';
+import { Constants, Location, Permissions } from 'expo';
 import { Picker, StyleSheet, Text, View } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
@@ -71,13 +72,29 @@ const BUILDINGS = [
 export default class Emergency extends React.Component {
 	constructor() {
 		super();
-		this.state = { index: 0 };
+		this.state = {
+			index: 0,
+			location: null,
+		};
 	}
 
-	// changeScreen = () => {
-	// 	const { navigate } = this.props.navigation;
-	// 	navigate('Map');
-	// }
+	componentWillMount() {
+		this._getLocationAsync();
+	}
+
+	_getLocationAsync = async () => {
+		let { status } = await Permissions.askAsync(Permissions.LOCATION);
+		if (status !== 'granted') {
+			this.setState({
+				errorMessage: 'Permission to access location was denied',
+			});
+		}
+
+		let location = await Location.getCurrentPositionAsync({});
+		console.log('location: ', location);
+		// this.props.screenProps.setCoords(location.coords);
+		this.setState({ location });
+	};
 	changeToMapScreen = () => {
 		const { navigate } = this.props.navigation;
 		navigate('MapScreen');
@@ -88,7 +105,7 @@ export default class Emergency extends React.Component {
 	}
 
 	render() {
-		const { index } = this.state;
+		const { index, location } = this.state;
 		return (
 			<View >
 				<SearchBar
@@ -109,9 +126,10 @@ export default class Emergency extends React.Component {
 						})
 					}
 				</Picker>
+				{ location ? (<Text>{JSON.stringify(location)}</Text>) : <Text/> }
 				<Button
 					onPress={this.changeToMapScreen}
-					text="GPS MY LOCATION"
+					text="USE MAP"
 				/>
 			</View>
 		);
