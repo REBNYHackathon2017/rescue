@@ -15,12 +15,13 @@
   width: auto;
 }
 
-.icon {
+.icon img{
   display: inline-block;
-  height: 20px !important;
+  height: 20px;
   width: 52px;
   padding-top: 0px;
-  margin-right: 15px;
+  margin-top: 0px;
+  margin-right: 0px;
 }
 
 .App-header {
