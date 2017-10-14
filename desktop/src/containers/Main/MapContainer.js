@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import MapComponent from '../components/MapComponent';
+import MapComponent from '../../components/MapComponent';
 
-
-class MapContainer extends Component {
+export default class MapContainer extends Component {
 
   constructor() {
     super();
@@ -23,11 +22,9 @@ class MapContainer extends Component {
         location={this.state.location}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6Lhim26T6_uUFuofmuNuA1xfTQwj8J6A&v=3.exp&libraries=geometry,drawing,places"
         loadingElement={<div style={{ height: `100%` }} />}
-        containerElement={<div style={{ height: `400px` }} />}
+        containerElement={<div style={{ height: `650px` }} />}
         mapElement={<div style={{ height: `100%` }} />}
       />
     );
   }
 }
-
-export default MapContainer;
