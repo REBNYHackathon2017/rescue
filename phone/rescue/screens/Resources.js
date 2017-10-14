@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
 import Button from '../components/CustomButton';
 
@@ -35,17 +35,16 @@ const styles = StyleSheet.create({
 });
 
 export default class Emergency extends React.Component {
-	changeScreen = () => {
-		const { navigate } = this.props.navigation;
-		navigate('Favorites');
-	}
-
 	render() {
+		const { navigate } = this.props.navigation;
+
 		return (
 			<View style={styles.container}>
 				<View style={styles.imageRow}>
 					<View style={styles.group}>
-						<Image style={styles.image} source={medical}/>
+						<TouchableHighlight onPress={() => navigate('Medical')}>
+							<Image style={styles.image} source={medical}/>
+						</TouchableHighlight>
 						<Text>Medical</Text>
 					</View>
 					<View style={styles.group}>
