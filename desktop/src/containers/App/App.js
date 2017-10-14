@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import MapContainer from '../MapContainer';
-import logo from '../../logo.svg';
+import MapContainer from '../Main/MapContainer';
+import logo from '../../assets/Asset_3_logo.svg';
 import './App.css';
 import {IndexLink} from 'react-router';
 // import { LinkContainer } from 'react-router-bootstrap';
