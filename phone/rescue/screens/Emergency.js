@@ -5,9 +5,7 @@ export default class Emergency extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <Text>Does your emergency pose an immediate threat to someone's someone’s life, safety, health, or property?</Text>
       </View>
     );
   }
