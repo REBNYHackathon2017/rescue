@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 import Buildings from './screens/Buildings';
+import Details from './screens/Details';
 import Emergency from './screens/Emergency';
 import Favorites from './screens/Favorites';
 import MapScreen from './screens/MapScreen';
@@ -16,6 +17,7 @@ const Screens = StackNavigator({
 	MapScreen: { screen: MapScreen },
 	Resources: { screen: Resources },
 	Medical: { screen: Medical },
+	Details: { screen: Details },
 });
 
 export default class App extends React.Component {
