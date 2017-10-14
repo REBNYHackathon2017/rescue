@@ -6,6 +6,7 @@ import Buildings from './screens/Buildings';
 import Emergency from './screens/Emergency';
 import Favorites from './screens/Favorites';
 import MapScreen from './screens/MapScreen';
+import Medical from './screens/Medical';
 import Resources from './screens/Resources';
 
 const Screens = StackNavigator({
@@ -14,6 +15,7 @@ const Screens = StackNavigator({
 	Buildings: { screen: Buildings },
 	MapScreen: { screen: MapScreen },
 	Resources: { screen: Resources },
+	Medical: { screen: Medical },
 });
 
 export default class App extends React.Component {
