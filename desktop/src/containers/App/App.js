@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import MapContainer from '../Main/MapContainer';
 import logo from '../../assets/Asset_3_logo.svg';
+import list from '../../assets/Asset_2_list.svg';
+import main from '../../assets/Asset_4_map.svg';
+import details from '../../assets/Asset_1_setting.svg';
+import search from '../../assets/Asset_12_search.svg';
 import './App.css';
 import {IndexLink} from 'react-router';
-// import { LinkContainer } from 'react-router-bootstrap';
-import {Navbar, NavBrand, Nav, NavItem, CollapsibleNav, NavDropdown, MenuItem} from 'react-bootstrap';
+import {Navbar, NavBrand, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button} from 'react-bootstrap';
 
 export default class App extends Component {
 
@@ -26,25 +28,44 @@ export default class App extends Component {
                 <Navbar collapseOnSelect>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <img src={logo} className="App-logo" alt="logo"/>
+                            {/*<LinkContainer to="/main">*/}
+                                {/* <img src={logo} className="App-logo" alt="logo"/>   */}
+                            {/*</LinkContainer>*/}
+                            <a className="navbar-band" href="/main">
+                                <img src={logo} alt="logo"/>
+                            </a>
                         </Navbar.Brand>
                         <Navbar.Toggle />
                     </Navbar.Header>
                     <Navbar.Collapse>
-                        <Nav>
-                            <NavItem eventKey={1} href="#">Link</NavItem>
-                            <NavItem eventKey={2} href="#">Link</NavItem>
-                            <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                                <MenuItem eventKey={3.1}>Action</MenuItem>
-                                <MenuItem eventKey={3.2}>Another action</MenuItem>
-                                <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                                <MenuItem divider/>
-                                <MenuItem eventKey={3.3}>Separated link</MenuItem>
-                            </NavDropdown>
-                        </Nav>
+                        <Navbar.Form pullLeft>
+                            <FormGroup>
+                                <FormControl type="text" placeholder="Search" />
+                            </FormGroup>
+                            {' '}
+                            <Button type="submit"><img src={search} alt="search"/></Button>
+                        </Navbar.Form>
                         <Nav pullRight>
-                            <NavItem eventKey={1} href="#">Link Right</NavItem>
-                            <NavItem eventKey={2} href="#">Link Right</NavItem>
+                            <Navbar.Text>
+                                showing:
+                                {'  '}
+                                <Navbar.Link href="#">all</Navbar.Link>
+                                {'  |  '}
+                                <Navbar.Link href="#">pending</Navbar.Link>
+                                {'  |  '}
+                                <Navbar.Link href="#">dispatch</Navbar.Link>
+                                {'  |  '}
+                                <Navbar.Link href="#">resolved</Navbar.Link>
+                            </Navbar.Text>
+                            <a className="icon" href="/list">
+                                <img src={list} alt="list"/>
+                            </a>
+                            <a className="icon" href="/main">
+                                <img src={main} alt="main"/>
+                            </a>
+                            <a className="icon" href="/details">
+                                <img src={details} alt="details"/>
+                            </a>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

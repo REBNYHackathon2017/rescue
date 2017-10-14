@@ -6,6 +6,23 @@
   height: 50px;
 }
 
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px;
+  width: auto;
+}
+
+.icon {
+  display: inline-block;
+  height: 20px !important;
+  width: 52px;
+  padding-top: 0px;
+  margin-right: 15px;
+}
+
 .App-header {
   background-color: #222;
   height: 150px;
@@ -19,9 +36,4 @@
 
 .App-intro {
   font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }

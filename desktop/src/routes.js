@@ -7,7 +7,7 @@ import Map from './containers/Main/MapContainer';
 const Routes = (props) => (
     <Router {...props}>
         <Route path="/" component={App}>
-            <Route title="Map" path="main" component={Map}/>
+            <Route title="Main" path="main" component={Map}/>
         </Route>
     </Router>
 );
