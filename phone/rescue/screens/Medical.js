@@ -24,11 +24,12 @@ const styles = StyleSheet.create({
 
 export default class Medical extends React.Component {
 	render() {
+		const { navigate } = this.props.navigation;
 		return (
 			<View style={styles.container}>
 				{
 					ISSUES.map((issue) => {
-						return (<Button key={issue} onPress={() => {}} text={issue} />);
+						return (<Button key={issue} onPress={() => { navigate('Details')}} text={issue} />);
 					})
 				}
 			</View>
