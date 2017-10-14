@@ -6,7 +6,7 @@ import {IndexLink} from 'react-router';
 // import { LinkContainer } from 'react-router-bootstrap';
 import {Navbar, NavBrand, Nav, NavItem, CollapsibleNav, NavDropdown, MenuItem} from 'react-bootstrap';
 
-class App extends Component {
+export default class App extends Component {
 
 //     return (
 // <div className="App">
@@ -55,5 +55,3 @@ class App extends Component {
         );
     }
 }
-
-export default App;

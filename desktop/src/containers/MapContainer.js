@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MapComponent from '../components/MapComponent';
 
 
-class MapContainer extends Component {
+export default class MapContainer extends Component {
 
   constructor() {
     super();
@@ -29,5 +29,3 @@ class MapContainer extends Component {
     );
   }
 }
-
-export default MapContainer;
