@@ -24,6 +24,7 @@ export default class CustomButton extends React.Component {
 						margin: 10,
 					}}
 					large={true}
+					onPress={onPress}
 					title={text}
 				/>
 			</View>
