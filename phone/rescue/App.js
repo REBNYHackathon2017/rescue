@@ -37,9 +37,15 @@ export default class App extends React.Component {
 	};
 
 	render() {
-		console.log('app state: ', this.state);
+		const { building } = this.state;
+		console.log('app building state: ', building);
 		return (
-			<Screens screenProps={{ setValue: this.setValue }} />
+			<Screens
+				screenProps={{
+					building,
+					setValue: this.setValue
+				}}
+			/>
 		);
 	}
 }
