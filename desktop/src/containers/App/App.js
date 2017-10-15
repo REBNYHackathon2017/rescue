@@ -18,7 +18,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        return axios.get(`backend:3002/api/reports/`)
+        return axios.get(`http://18.216.36.119:3002/api/reports/`)
             .then(result => {
                 this.setState({ data: result.data }, () => {
                     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } } = { coords: {} }) => {
