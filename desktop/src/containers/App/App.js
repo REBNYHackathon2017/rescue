@@ -19,6 +19,7 @@ export default class App extends Component {
         super(props);
         this.state = {
             data: [{}],
+            statusSort: 'all',
         }
     }
 
@@ -30,6 +31,10 @@ export default class App extends Component {
     updateReportStatus = (entryId, nextStatus) => {
         return axios.put(`http://18.216.36.119:3002/api/reports/${entryId}`, {status: nextStatus})
             .then(() => this.getAllReports())
+    };
+
+    updateStatusSort = (status) => {
+        this.setState({statusSort: status});
     };
 
     render() {
@@ -56,13 +61,13 @@ export default class App extends Component {
                         <Navbar.Form pullRight className="icon">
                             showing:
                             {'  '}
-                            <Navbar.Link href="#">all</Navbar.Link>
-                            {'  |  '}
-                            <Navbar.Link href="#">pending</Navbar.Link>
-                            {'  |  '}
-                            <Navbar.Link href="#">dispatch</Navbar.Link>
-                            {'  |  '}
-                            <Navbar.Link href="#">resolved</Navbar.Link>
+                            <Button bsStyle="link" onClick={this.updateStatusSort.bind(this, 'status')}>all</Button>
+                            {'|'}
+                            <Button bsStyle="link" onClick={this.updateStatusSort.bind(this, 'pending')}>pending</Button>
+                            {'|'}
+                            <Button bsStyle="link" onClick={this.updateStatusSort.bind(this, 'dispatched')}>dispatched</Button>
+                            {'|'}
+                            <Button bsStyle="link" onClick={(this.updateStatusSort.bind(this, 'resolved'))}>resolved</Button>
                             {'     '}
                             <a className="icon" href="/list">
                                 <img src={list} alt="list"/>
@@ -77,8 +82,9 @@ export default class App extends Component {
                     </Navbar.Collapse>
                 </Navbar>
                 <div>
-                    {this.props.children && React.cloneElement(this.props.children, {updateReportStatus: this.updateReportStatus , getAllReports: this.getAllReports, data: this.state.data})}
+                    {this.props.children && React.cloneElement(this.props.children, {updateReportStatus: this.updateReportStatus , getAllReports: this.getAllReports, statusSort: this.state.statusSort, data: this.state.data})}
                 </div>
+                <pre>{JSON.stringify(this.state, null, 2)}</pre>
             </div>
         );
     }
