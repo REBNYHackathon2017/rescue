@@ -21,11 +21,24 @@ const Screens = StackNavigator({
 });
 
 export default class App extends React.Component {
-  render() {
-    return (
-      <Screens />
-    );
-  }
+	constructor() {
+		super();
+		this.state = {
+			latitude: null,
+			longitude: null,
+		};
+	}
+
+	setValue = (key, value) => {
+		this.setState({ [key]: value });
+	};
+
+	render() {
+		console.log('app state: ', this.state);
+		return (
+			<Screens screenProps={{ setValue: this.setValue }} />
+		);
+	}
 }
 
 const styles = StyleSheet.create({
