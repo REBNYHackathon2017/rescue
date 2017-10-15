@@ -3,7 +3,6 @@ import logo from '../../assets/Asset_3_logo.svg';
 import list from '../../assets/Asset_2_list.svg';
 import main from '../../assets/Asset_4_map.svg';
 import details from '../../assets/Asset_1_setting.svg';
-import search from '../../assets/Asset_12_search.svg';
 import './App.css';
 import {Navbar, FormGroup, FormControl, Button} from 'react-bootstrap';
 import axios from 'axios';
