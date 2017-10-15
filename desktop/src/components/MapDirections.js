@@ -29,7 +29,23 @@ const MapDirections = compose(
           console.error(`error fetching directions ${result}`);
         }
       });
-    }
+    },
+      componentWillReceiveProps(nextProps) {
+          const DirectionsService = new google.maps.DirectionsService();
+          DirectionsService.route({
+              origin: new google.maps.LatLng(this.props.origin.lat, this.props.origin.lng),
+              destination: new google.maps.LatLng(nextProps.destination.latitude, nextProps.destination.longitude),
+              travelMode: google.maps.TravelMode.DRIVING,
+          }, (result, status) => {
+              if (status === google.maps.DirectionsStatus.OK) {
+                  this.setState({
+                      directions: result,
+                  });
+              } else {
+                  console.error(`error fetching directions ${result}`);
+              }
+          });
+      }
   })
 )(props =>
   <GoogleMap

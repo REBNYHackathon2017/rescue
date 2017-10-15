@@ -13,7 +13,6 @@ export default class Detail extends Component {
     };
 
     componentDidMount() {
-        console.log('DATTAAA', this.props.data)
         const selectedEntry = this.props.data.filter((entry) => Number(entry.id) === Number(this.props.params.id))[0];
         const entryFromSameNumber = (selectedEntry && selectedEntry.length) ? this.props.data.filter((entry) => selectedEntry[0].mobile === entry.mobile) : this.props.data.slice();
         this.setState({ selectedEntry, entryFromSameNumber });
@@ -26,7 +25,8 @@ export default class Detail extends Component {
 
     render() {
         const formattedData = this.state.entryFromSameNumber.sort((perv, curr) => perv.createdAt - curr.createdAt).map((entry) => {
-            return {
+            let nextObj = {...entry};
+            const updatedFields = {
                 id: entry.id,
                 name: entry.name,
                 location: entry.building,
@@ -34,7 +34,10 @@ export default class Detail extends Component {
                 emergency: `${entry.resource} > ${entry.issue}`,
                 status: entry.status,
                 time: moment(entry.createdAt).tz('America/New_York').format('MMMM Do YYYY, h:mm a'),
-            }
+            };
+
+            nextObj = Object.assign({}, nextObj, updatedFields);
+            return nextObj;
         });
 
         const circleStatus = (cell, row, enumObject, rowIndex) => {
@@ -53,10 +56,23 @@ export default class Detail extends Component {
             return statusCircle;
         };
 
+        const updateDirectionToDisplay = (row) => {
+            this.setState({selectedEntry: row});
+        };
+
+        function sortTime(a, b, order) {   // order is desc or asc
+            if (order === 'desc') {
+                return moment(b.createdAt) - moment(a.createdAt);
+            } else {
+                return moment(a.createdAt) - moment(b.createdAt);
+            }
+        };
+
         const tableOptions = {
             sortName: 'time',
             sortOrder: 'desc',
             sizePerPage: 3,
+            onRowClick: updateDirectionToDisplay,
         };
 
         if (!this.props.location || !this.state.selectedEntry) return <div></div>
@@ -119,6 +135,7 @@ export default class Detail extends Component {
                                                        dataSort={true}>Emergency
                                     </TableHeaderColumn>
                                     <TableHeaderColumn dataField="time"
+                                                       sortFunc={sortTime}
                                                        dataSort={true}>Time
                                     </TableHeaderColumn>
                                 </BootstrapTable>
@@ -127,7 +144,7 @@ export default class Detail extends Component {
                             }
                         </Col>
                         <Col md={6}>
-                            <h4>Responding To: <span className="selectedLink">{selectedEntry.resource} > {selectedEntry.issue}</span></h4>
+                            <h4>Responding To: <span className="selectedLink">{selectedEntry.resource}> {selectedEntry.issue}</span></h4>
                             <MapDirections
                                 data={this.state.entryFromSameNumber}
                                 origin={this.props.location}
