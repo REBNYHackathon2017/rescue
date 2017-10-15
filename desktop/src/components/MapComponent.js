@@ -1,8 +1,5 @@
 import React from 'react';
 import {withScriptjs, withGoogleMap, GoogleMap, Marker} from "react-google-maps";
-import grayMarker from '../assets/parking_lot_maps.png';
-import info from '../assets/info-i_maps.png';
-import dispatch from '../assets/library_maps.png';
 import police from '../assets/Asset_marker_police.png';
 import nature from '../assets/Asset_marker_nature.png';
 import medical from '../assets/Asset_marker_hospital.png';
