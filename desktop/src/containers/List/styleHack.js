@@ -305,6 +305,20 @@ td.react-bs-table-expand-cell {
 .bounceOut {
   animation-name: bounceOut;
 }
+
+.react-bs-container-body tr {
+  border-top-style: hidden !important;
+  border-bottom-style: hidden !important;
+  border-right-style: none !important;
+  border-left-style: none !important;
+}
+
+.react-bs-container-header tr {
+  border-bottom-style: hidden !important;
+  border-top-style: hidden !important;
+  border-right-style: none !important;
+  border-left-style: none !important;
+}
 `;
 
 module.exports = styleText;
