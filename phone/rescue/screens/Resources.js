@@ -36,6 +36,12 @@ const styles = StyleSheet.create({
 		color: 'gray',
 		fontSize: 22,
 	},
+	title: {
+		color: 'gray',
+		fontSize: 22,
+		fontWeight: 'bold',
+		marginBottom: 10,
+	},
 });
 
 export default class Resources extends React.Component {
@@ -55,6 +61,7 @@ export default class Resources extends React.Component {
 
 		return (
 			<View style={styles.container}>
+				<Text style={styles.title}></Text>
 				<View style={styles.imageRow}>
 					<View style={styles.group}>
 						<TouchableHighlight onPress={this.updateResource.bind(this, 'Medical')}>

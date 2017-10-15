@@ -20,6 +20,12 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+	title: {
+		color: 'gray',
+		fontSize: 22,
+		fontWeight: 'bold',
+		marginBottom: 10,
+	},
 	top: {
 		backgroundColor: '#d1c5c6',
 		flex: .1,
@@ -44,6 +50,7 @@ export default class Favorites extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
+				<Text style={styles.title}>Where are you?</Text>
 				{
 					FAVORITE_LOCATIONS.map((place, i) => {
 						return (

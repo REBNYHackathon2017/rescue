@@ -22,6 +22,12 @@ const styles = StyleSheet.create({
 	label: {
 		marginBottom: 10,
 	},
+	title: {
+		color: 'gray',
+		fontSize: 22,
+		fontWeight: 'bold',
+		marginBottom: 10,
+	},
 });
 
 export default class Details extends React.Component {
@@ -65,10 +71,9 @@ export default class Details extends React.Component {
 
 	render() {
 		const { text } = this.state;
-		console.log('text: ', text);
 		return (
 			<View style={styles.container}>
-				<FormLabel style={styles.label}>Emergency Details</FormLabel>
+				<FormLabel labelStyle={styles.title}>Emergency Details</FormLabel>
 				<AutoGrowingTextInput style={styles.input} onChangeText={this.updateDetails} placeholder={'Additional information (optional)'} />
 				<Button onPress={this.sendDetails} text="SEND OUT MY SOS" />
 			</View>

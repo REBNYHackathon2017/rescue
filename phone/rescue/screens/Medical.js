@@ -20,6 +20,12 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+	title: {
+		color: 'gray',
+		fontSize: 22,
+		fontWeight: 'bold',
+		marginBottom: 10,
+	},
 });
 
 export default class Medical extends React.Component {
@@ -37,6 +43,7 @@ export default class Medical extends React.Component {
 		const { navigate } = this.props.navigation;
 		return (
 			<View style={styles.container}>
+				<Text style={styles.title}>What's your emergency?</Text>
 				{
 					ISSUES.map((issue) => {
 						return (<Button key={issue} onPress={this.updateIssue.bind(this, issue)} text={issue} />);
