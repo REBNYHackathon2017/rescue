@@ -11,8 +11,10 @@ import Floors from './screens/Floors';
 import MapScreen from './screens/MapScreen';
 import Medical from './screens/Medical';
 import Resources from './screens/Resources';
+import Status from './screens/Status';
 
 const Screens = StackNavigator({
+	Status: { screen: Status },
 	Emergency: { screen: Emergency },
 	Favorites: { screen: Favorites },
 	Buildings: { screen: Buildings },
@@ -59,13 +61,30 @@ export default class App extends React.Component {
 	}
 
 	render() {
-		const { details, numFloors } = this.state;
+		const fake = {
+			"emergency": true,
+			"latitude": "40.741135",
+			"longitude": "-74.008047",
+			"building": "848 WASHINGTON STREET",
+			"floor": 18,
+			"resource": "medical",
+			"issue": "stroke",
+			"details": "i think my husband is having a stroke"
+		};
+		const { building, details, floor, issue, resource } = fake;
+		const numFloors = 3;
+
+		// const { details, issue, numFloors, resource } = this.state;
 		return (
 			<Screens
 				screenProps={{
 					_submitReport: this._submitReport,
+					building,
 					details,
+					floor,
+					issue,
 					numFloors,
+					resource,
 					setValue: this.setValue
 				}}
 			/>
