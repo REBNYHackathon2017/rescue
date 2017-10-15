@@ -28,17 +28,13 @@ export default class App extends Component {
             });
     }
 
-    addReport = newReport => {
-        this.setState(prevState => {
-            const copy = prevState.data.slice();
-            copy.push(newReport);
-            return { data: copy };
-        });
-    }
-
     getAllReports = () => {
         return axios.get(`http://18.216.36.119:3002/api/reports/`)
-            .then((result) => this.setState({data: result.data.sort((prev, curr) => curr.createdAt - prev.createdAt)}));
+            .then((result) => {
+                return this.setState({
+                    data: result.data.sort((prev, curr) => curr.createdAt - prev.createdAt)
+                });
+            });
     };
 
     updateReportStatus = (entryId, nextStatus) => {
@@ -133,7 +129,7 @@ export default class App extends Component {
                         updateReportStatus: this.updateReportStatus,
                         statusSort: this.state.statusSort,
                         data: this.state.data,
-                        addReport: this.addReport,
+                        addReport: this.getAllReports,
                         location: this.state.location
                     })
                     }

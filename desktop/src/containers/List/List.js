@@ -112,7 +112,7 @@ export default class List extends Component {
         };
 
         return (
-            <div>
+            <div className="container">
                 <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
                 <style>{require('./styleHack')}</style>
                 <BootstrapTable data={formattedData}

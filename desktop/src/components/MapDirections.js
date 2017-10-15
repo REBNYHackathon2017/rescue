@@ -16,7 +16,6 @@ const MapDirections = compose(
   lifecycle({
     componentDidMount() {
       const DirectionsService = new google.maps.DirectionsService();
-      console.log('destination', this.props.destination);
       DirectionsService.route({
         origin: new google.maps.LatLng(this.props.origin.lat, this.props.origin.lng),
         destination: new google.maps.LatLng(this.props.destination.latitude, this.props.destination.longitude),
