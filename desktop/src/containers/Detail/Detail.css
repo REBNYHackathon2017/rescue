@@ -1,0 +1,13 @@
+.redCircle {
+    background: #f00;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.greenCircle {
+    background: greenyellow;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}

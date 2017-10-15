@@ -5,21 +5,32 @@ import main from '../../assets/Asset_4_map.svg';
 import details from '../../assets/Asset_1_setting.svg';
 import search from '../../assets/Asset_12_search.svg';
 import './App.css';
-import {IndexLink} from 'react-router';
-import {Navbar, NavBrand, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button} from 'react-bootstrap';
+import {Navbar, FormGroup, FormControl, Button} from 'react-bootstrap';
+import axios from 'axios';
 
 export default class App extends Component {
 
-//     return (
-// <div className="App">
-// <header className="App-header">
-// <img src={logo} className="App-logo" alt="logo"/>
-// <h1 className="App-title">Welcome to React</h1>
-// </header>
-// <MapContainer />
-// </div>
-// );
+    componentWillMount() {
+        return axios.get(`http://18.216.36.119:3002/api/reports/`)
+            .then((result) => this.setState({data: result.data}));
+    }
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [{}],
+        }
+    }
+
+    getAllReports = () => {
+        return axios.get(`http://18.216.36.119:3002/api/reports/`)
+            .then((result) => this.setState({data: result.data.sort((prev, curr) => curr.createdAt - prev.createdAt)}));
+    };
+
+    updateReportStatus = (entryId, nextStatus) => {
+        return axios.put(`http://18.216.36.119:3002/api/reports/${entryId}`, {status: nextStatus})
+            .then(() => this.getAllReports())
+    };
 
     render() {
 
@@ -28,9 +39,6 @@ export default class App extends Component {
                 <Navbar>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            {/*<LinkContainer to="/main">*/}
-                            {/* <img src={logo} className="App-logo" alt="logo"/>   */}
-                            {/*</LinkContainer>*/}
                             <a className="navbar-band" href="/main">
                                 <img src={logo} alt="logo"/>
                             </a>
@@ -69,7 +77,7 @@ export default class App extends Component {
                     </Navbar.Collapse>
                 </Navbar>
                 <div>
-                    {this.props.children}
+                    {this.props.children && React.cloneElement(this.props.children, {updateReportStatus: this.updateReportStatus , getAllReports: this.getAllReports, data: this.state.data})}
                 </div>
             </div>
         );

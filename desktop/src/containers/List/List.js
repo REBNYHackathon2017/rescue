@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import mockData from './mockData';
 import {Link} from 'react-router';
+import axios from 'axios';
 
 export default class List extends Component {
-
-    componentWillMount() {
-        this.setState({data: mockData});
+    static propTypes = {
+        getAllReports: PropTypes.func,
+        updateReportStatus: PropTypes.func,
+        data: PropTypes.array,
     };
 
     constructor(props) {
@@ -14,22 +15,35 @@ export default class List extends Component {
         this.state = {};
     }
 
-    goToDetail = (entry) => {
-        console.log('entry being passed in function goToDetail', entry);
-        this.goToState(entry.id);
-    };
+    // goToDetail = (entry) => {
+    //     this.goToState(entry.id);
+    // };
 
     updateCellStatus = (entry) => {
         console.log('entry being passe in function updateCellStatus', entry);
+        let nextStatus;
+
+        switch (entry.status) {
+            case 'pending':
+                nextStatus = 'dispatched';
+                break;
+            case 'dispatched':
+                nextStatus = 'resolved';
+                break;
+            default:
+                nextStatus = 'dispatched';
+        }
+
+        return this.props.updateReportStatus(entry.id, nextStatus);
     };
 
     render() {
         const styles = require('./List.scss');
 
-        const formattedData = this.state.data.map((entry) => {
+        const formattedData = this.props.data.sort((prev, curr) => curr.createdAt - prev.createdAt).map((entry) => {
             return {
                 id: entry.id,
-                name: 'John Smith',
+                name: entry.name,
                 location: entry.building,
                 response: entry.resource,
                 emergency: entry.issue,
@@ -52,7 +66,7 @@ export default class List extends Component {
                 theButton = <button style={{backgroundColor: "#808080", width: "75px", color: "white", height: "30px"}}
                                     type="button"
                                     onClick={this.updateCellStatus.bind(this, row)}>
-                    Abort
+                    Resolve
                 </button>
             }
 
@@ -102,7 +116,6 @@ export default class List extends Component {
                                        dataAlign="center">
                     </TableHeaderColumn>
                 </BootstrapTable>
-                <pre>{JSON.stringify(this.state, null, 2)}</pre>
             </div>
         );
     };
