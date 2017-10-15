@@ -3,10 +3,10 @@ import {withScriptjs, withGoogleMap, GoogleMap, Marker} from "react-google-maps"
 import grayMarker from '../assets/parking_lot_maps.png';
 import info from '../assets/info-i_maps.png';
 import dispatch from '../assets/library_maps.png';
-import police from '../assets/Asset_marker_police.svg';
-import nature from '../assets/Asset_marker_natural.svg';
-import medical from '../assets/Asset_marker_hospital.svg';
-import fire from '../assets/Asset_marker_fire.svg';
+import police from '../assets/Asset_marker_police.png';
+import nature from '../assets/Asset_marker_nature.png';
+import medical from '../assets/Asset_marker_hospital.png';
+import fire from '../assets/Asset_marker_fire.png';
 
 const MapComponent = withScriptjs(withGoogleMap(props => {
 
