@@ -4,8 +4,8 @@ import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import Button from '../components/CustomButton';
 
 import medical from '../assets/Asset3.png';
-import fire from '../assets/Asset4.png';
-import police from '../assets/Asset5.png';
+import fire from '../assets/Asset4_2.png';
+import police from '../assets/Asset5_3.png';
 import nature from '../assets/Asset6.png';
 import building from '../assets/Asset7.png';
 import other from '../assets/Asset8.png';
@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	image: {
-		height: 75,
+		height: 65,
 		margin: 25,
-		width: 75,
+		width: 65,
 	},
 	imageRow: {
 		flex: 1,
@@ -59,7 +59,9 @@ export default class Resources extends React.Component {
 						<Text>Medical</Text>
 					</View>
 					<View style={styles.group}>
-						<Image style={styles.image} source={fire}/>
+						<TouchableHighlight onPress={this.updateResource.bind(this, 'Medical')}>
+							<Image style={styles.image} source={fire}/>
+						</TouchableHighlight>
 						<Text>Fire & Rescue</Text>
 					</View>
 				</View>
