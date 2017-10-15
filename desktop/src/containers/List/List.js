@@ -161,7 +161,6 @@ export default class List extends Component {
                                        dataAlign="center">
                     </TableHeaderColumn>
                 </BootstrapTable>
-                <pre>{JSON.stringify(formattedData, null, 2)}</pre>
             </div>
         );
     };
