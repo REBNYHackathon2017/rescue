@@ -27,8 +27,14 @@ export default class App extends React.Component {
 		super();
 		this.state = {
 			building: null,
+			details: '',
+			emergency: false,
+			floor: null,
+			issue: null,
 			latitude: null,
 			longitude: null,
+			numFloors: null,
+			resource: null,
 		};
 	}
 
@@ -37,12 +43,12 @@ export default class App extends React.Component {
 	};
 
 	render() {
-		const { building } = this.state;
-		console.log('app building state: ', building);
+		const { numFloors } = this.state;
+		console.log('app numFloors state: ', numFloors);
 		return (
 			<Screens
 				screenProps={{
-					building,
+					numFloors,
 					setValue: this.setValue
 				}}
 			/>

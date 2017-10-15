@@ -40,8 +40,8 @@ export default class Emergency extends React.Component {
 
 	render() {
 		const { buildings, floor } = this.state;
-		const { building } = this.props.screenProps.building;
-		const floors = (this.props.screenProps.building) ? this.props.screenProps.building.numberOfFloors : 1;
+		const { numFloors } = this.props.screenProps;
+		const floors = numFloors || 1;
 		const floorArr = [...Array(floors || 1).keys()].map((num) => num + 1);
 		return (
 			<View>
