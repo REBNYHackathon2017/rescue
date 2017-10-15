@@ -55,28 +55,16 @@ export default class App extends React.Component {
 		};
 		try {
 			let response = await fetch('http://18.216.36.119:3002/api/reports/', config);
-			this.setState({ id: response.id });
-			console.log('response: ', response);
+			const parsed = JSON.parse(response._bodyText);
+			console.log('parsed: ', parsed.id);
+			this.setState({ id: parsed.id });
+
 		} catch(error) {
 			console.error(error);
 		}
 	}
 
 	render() {
-		// const fake = {
-		// 	"emergency": true,
-		// 	"latitude": "40.741135",
-		// 	"longitude": "-74.008047",
-		// 	"building": "848 WASHINGTON STREET",
-		// 	"floor": 18,
-		// 	"resource": "medical",
-		// 	"id": 54,
-		// 	"issue": "stroke",
-		// 	"details": "i think my husband is having a stroke"
-		// };
-		// const { building, details, floor, id, issue, resource } = fake;
-		// const numFloors = 3;
-
 		const { building, details, floor, id, issue, numFloors, resource } = this.state;
 		return (
 			<Screens
