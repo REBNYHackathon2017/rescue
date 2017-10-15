@@ -3,6 +3,7 @@ import {Grid, Row, Col} from 'react-bootstrap';
 import MapComponent from '../../components/MapComponent';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import license from '../../assets/license.png';
+const moment = require('moment-timezone');
 
 export default class Detail extends Component {
     static propTypes = {
@@ -17,8 +18,13 @@ export default class Detail extends Component {
     }
 
     componentDidMount() {
-        this.props.getAllReports();
+        return this.props.getAllReports();
     }
+
+    formatNumber = (mobile) => {
+        if (!mobile) return;
+        return `(${mobile.slice(0, 3)}) ${mobile.slice(3, 6)} - ${mobile.slice(6)}`
+    };
 
     render() {
         const selectedEntry = this.state.selectedEntry[0] || {};
@@ -30,7 +36,7 @@ export default class Detail extends Component {
                 response: entry.resource,
                 emergency: `${entry.resource} > ${entry.issue}`,
                 status: entry.status,
-                time: entry.createdAt,
+                time: moment(entry.createdAt).tz('America/New_York').format('MMMM Do YYYY, h:mm a'),
             }
         });
 
@@ -50,7 +56,11 @@ export default class Detail extends Component {
             return statusCircle;
         };
 
-        const tableOptions = {paginationSize: 3};
+        const tableOptions = {
+            sortName: 'time',
+            sortOrder: 'desc',
+            sizePerPage: 3,
+        };
 
         return (
             <div>
@@ -58,36 +68,38 @@ export default class Detail extends Component {
                 <Grid>
                     <Row className="show-grid">
                         <Col md={6}>
-                            <img height="200" src={license} alt="license"/>
-                            <h4>{selectedEntry.name} - {selectedEntry.mobile}</h4>
+                            <div className="center">
+                                <img height="180" src={license} alt="license"/>
+                            </div>
+                            <span className="center"><h4>{selectedEntry.name} - {this.formatNumber(selectedEntry.mobile) || `(848) 284-3328`}</h4></span>
                             <hr/>
                             <Col md={12}>
                                 <Col md={6}>
-                                    Home:
+                                    <b>Home:</b>
                                     <br/>
                                     312W 50TH Street, Apt. 12,
                                     <br/>
                                     New York, NY 10036
                                 </Col>
                                 <Col md={6}>
-                                    Work:
+                                    <b>Work:</b>
                                     <br/>
                                     345 Park Avenue,
                                     <br/>
                                     New York, NY 10034
                                 </Col>
                             </Col>
-                            <h11>&nbsp;</h11>
+                            <h13>&nbsp;</h13>
                             <Col md={12} className={{display: 'inline-block'}}>
                                 <Col md={6}>
-                                    Emergency Contact 1:
+                                    <b>Emergency Contact 1:</b>
                                     <br/>
                                     5 Park Avenue,
                                     <br/>
                                     New York, NY 10029
                                 </Col>
                                 <Col md={6}>
-                                    Emergency Contact 2:
+                                    <b>Emergency Contact 2:</b>
                                     <br/>
                                     162 Bridgewood Street,
                                     <br/>
@@ -116,7 +128,7 @@ export default class Detail extends Component {
                             }
                         </Col>
                         <Col md={6}>
-                            <h4>Responding To: {selectedEntry.resource} > {selectedEntry.issue}</h4>
+                            <h4>Responding To: <span className="selectedLink">{selectedEntry.resource} > {selectedEntry.issue}</span></h4>
                             <MapComponent
                                 data={this.state.entryFromSameNumber}
                                 location={this.state.location}

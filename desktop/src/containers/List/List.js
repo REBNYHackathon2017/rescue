@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import io from 'socket.io-client';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Link} from 'react-router';
+const moment = require('moment-timezone');
 import AlertContainer from 'react-alert';
 
 export default class List extends Component {
@@ -9,6 +10,7 @@ export default class List extends Component {
         getAllReports: PropTypes.func,
         updateReportStatus: PropTypes.func,
         data: PropTypes.array,
+        statusSort:PropTypes.string,
     };
 
     componentDidMount() {
@@ -60,7 +62,7 @@ export default class List extends Component {
     render() {
         const styles = require('./List.scss');
 
-        const formattedData = this.props.data.sort((prev, curr) => curr.createdAt - prev.createdAt).map((entry) => {
+        let formattedData = this.props.data.sort((prev, curr) => curr.createdAt - prev.createdAt).map((entry) => {
             return {
                 id: entry.id,
                 name: entry.name,
@@ -68,9 +70,11 @@ export default class List extends Component {
                 response: entry.resource,
                 emergency: entry.issue,
                 status: entry.status,
-                time: entry.createdAt,
+                time: moment(entry.createdAt).tz('America/New_York').format('MMMM Do YYYY, h:mm a'),
             }
         });
+
+        if (this.props.statusSort !== 'all') formattedData = formattedData.filter((entry) => entry.status === this.props.statusSort);
 
         const cellButton = (cell, row, enumObject, rowIndex) => {
             let theButton;
@@ -103,6 +107,7 @@ export default class List extends Component {
         const tableOptions = {
             sortName: 'time',
             sortOrder: 'desc',
+            sizePerPage: 11,
         };
 
         return (
@@ -117,22 +122,22 @@ export default class List extends Component {
                                 pagination
                                 keyField="id">
                     <TableHeaderColumn dataField="name"
-                                       dataSort={true}>Name
+                                       dataSort={true} width="120">Name
                     </TableHeaderColumn>
                     <TableHeaderColumn dataField="location"
                                        dataSort={true}>Location
                     </TableHeaderColumn>
                     <TableHeaderColumn dataField="response"
-                                       dataSort={true}>Response
+                                       dataSort={true} width="100">Response
                     </TableHeaderColumn>
                     <TableHeaderColumn dataField="emergency"
-                                       dataSort={true}>Emergency
+                                       dataSort={true} width="130">Emergency
                     </TableHeaderColumn>
                     <TableHeaderColumn dataField="status"
-                                       dataSort={true}>Status
+                                       dataSort={true} width="130">Status
                     </TableHeaderColumn>
                     <TableHeaderColumn dataField="time"
-                                       dataSort={true}>Time
+                                       dataSort={true} width="230">Time
                     </TableHeaderColumn>
                     <TableHeaderColumn dataField="button"
                                        dataFormat={cellButton}
