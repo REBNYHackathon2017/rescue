@@ -23,8 +23,13 @@ export default class App extends Component {
     }
 
     getAllReports = () => {
-        axios.get(`http://18.216.36.119:3002/api/reports/`)
-            .then((result) => this.setState({data: result.data}));
+        return axios.get(`http://18.216.36.119:3002/api/reports/`)
+            .then((result) => this.setState({data: result.data.sort((prev, curr) => curr.createdAt - prev.createdAt)}));
+    };
+
+    updateReportStatus = (entryId, nextStatus) => {
+        return axios.put(`http://18.216.36.119:3002/api/reports/${entryId}`, {status: nextStatus})
+            .then(() => this.getAllReports())
     };
 
     render() {
@@ -72,7 +77,7 @@ export default class App extends Component {
                     </Navbar.Collapse>
                 </Navbar>
                 <div>
-                    {this.props.children && React.cloneElement(this.props.children, {getAllReports: this.getAllReports.bind(this), data: this.state.data})}
+                    {this.props.children && React.cloneElement(this.props.children, {updateReportStatus: this.updateReportStatus , getAllReports: this.getAllReports, data: this.state.data})}
                 </div>
             </div>
         );

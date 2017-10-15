@@ -1,10 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Link} from 'react-router';
+import axios from 'axios';
 
 export default class List extends Component {
     static propTypes = {
         getAllReports: PropTypes.func,
+        updateReportStatus: PropTypes.func,
         data: PropTypes.array,
     };
 
@@ -13,19 +15,32 @@ export default class List extends Component {
         this.state = {};
     }
 
-    goToDetail = (entry) => {
-        console.log('entry being passed in function goToDetail', entry);
-        this.goToState(entry.id);
-    };
+    // goToDetail = (entry) => {
+    //     this.goToState(entry.id);
+    // };
 
     updateCellStatus = (entry) => {
         console.log('entry being passe in function updateCellStatus', entry);
+        let nextStatus;
+
+        switch (entry.status) {
+            case 'pending':
+                nextStatus = 'dispatched';
+                break;
+            case 'dispatched':
+                nextStatus = 'resolved';
+                break;
+            default:
+                nextStatus = 'dispatched';
+        }
+
+        return this.props.updateReportStatus(entry.id, nextStatus);
     };
 
     render() {
         const styles = require('./List.scss');
 
-        const formattedData = this.props.data.map((entry) => {
+        const formattedData = this.props.data.sort((prev, curr) => curr.createdAt - prev.createdAt).map((entry) => {
             return {
                 id: entry.id,
                 name: entry.name,
@@ -51,7 +66,7 @@ export default class List extends Component {
                 theButton = <button style={{backgroundColor: "#808080", width: "75px", color: "white", height: "30px"}}
                                     type="button"
                                     onClick={this.updateCellStatus.bind(this, row)}>
-                    Resolved
+                    Resolve
                 </button>
             }
 
