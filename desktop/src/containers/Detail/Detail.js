@@ -50,7 +50,6 @@ export default class Detail extends Component {
             return statusCircle;
         };
 
-
         const tableOptions = {paginationSize: 3};
 
         return (
