@@ -1,4 +1,5 @@
 const { Reports, sequelize } = require('../db');
+const { helpers: { delay } } = require('../modules');
 
 const reports = [{
     "emergency": true,
@@ -130,9 +131,30 @@ const reports = [{
     "name": "Al Goodman"
 }];
 
-sequelize.sync({ force: true })
-	.then(() => console.log('Reports synced.'))
-	.then(() => Reports.bulkCreate(reports, { returning: true }))
+sequelize.sync()
+	.then(() => console.log('DB synced.'))
+	.then(() => postReportsRecursively(reports))
+	.then(() => Reports.findAll())
 	.then(reports => console.log(`${reports.length} created. Ex: ${reports[0].get()}`))
-	.catch(err => console.log(`Error fetching buildings: ${err}`));
+	.catch(err => console.log(`Error creating reports: ${err}`));
+
+
+function postReportsRecursively(reports) {
+
+	function recurseCreate(reports) {
+		Reports.create(reports[0])
+			.then(() => {
+				reports = reports.slice(1);
+				console.log('batch in! To go:', reports.length);
+				if (reports.length) {
+					return delay(200)
+						.then(() => recurseCreate(reports));
+				}
+				return Promise.resolve();
+			});
+	}
+
+	return Reports.truncate()
+		.then(() => recurseCreate(reports));
+}
 
