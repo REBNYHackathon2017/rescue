@@ -67,7 +67,7 @@ router.put('/:reportId', (req, res, next) => {
 			updatedReport = report.get();
 			return res.status(201).json(updatedReport);
 		})
-		.then(() => io.emit('update', updatedReport))
+		.then(() => io.emit('update', { id: updatedReport.id, status: updatedReport.status }))
 		.catch(next);
 });
 

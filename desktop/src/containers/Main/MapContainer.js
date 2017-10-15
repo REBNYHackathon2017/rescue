@@ -7,18 +7,6 @@ export default class MapContainer extends Component {
     statusSort: PropTypes.string,
   };
 
-  constructor() {
-    super();
-    this.state = {};
-  }
-
-  componentWillMount() {
-    if (navigator && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } } = { coords: {} }) => {
-        this.setState({ location: { lat: latitude, lng: longitude } }, () => console.log(this.state))
-      });
-    }
-  }
 
   // displayMarkers = () => {
   //     if (!this.props.data) return [];
@@ -39,7 +27,7 @@ export default class MapContainer extends Component {
     return (
       <MapComponent
         data={sortedData}
-        location={this.state.location}
+        location={this.props.location}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6Lhim26T6_uUFuofmuNuA1xfTQwj8J6A&v=3.exp&libraries=geometry,drawing,places"
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `650px` }} />}
