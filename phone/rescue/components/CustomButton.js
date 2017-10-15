@@ -22,6 +22,7 @@ export default class CustomButton extends React.Component {
 					buttonStyle={{
 						alignSelf: 'center',
 						margin: 10,
+						width: 300,
 					}}
 					large={true}
 					onPress={onPress}
