@@ -60,6 +60,8 @@ export default class List extends Component {
         return this.props.updateReportStatus(entry.id, nextStatus);
     };
 
+
+
     render() {
         const styles = require('./List.scss');
 
@@ -111,6 +113,14 @@ export default class List extends Component {
             sizePerPage: 11,
         };
 
+        function sortTime(a, b, order) {   // order is desc or asc
+            if (order === 'desc') {
+                return moment(b.createdAt) - moment(a.createdAt);
+            } else {
+                return moment(a.createdAt) - moment(b.createdAt);
+            }
+        };
+
         return (
             <div>
                 <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
@@ -138,6 +148,7 @@ export default class List extends Component {
                                        dataSort={true} width="130">Status
                     </TableHeaderColumn>
                     <TableHeaderColumn dataField="time"
+                                       sortFunc={sortTime}
                                        dataSort={true} width="230">Time
                     </TableHeaderColumn>
                     <TableHeaderColumn dataField="button"
@@ -149,6 +160,7 @@ export default class List extends Component {
                                        dataAlign="center">
                     </TableHeaderColumn>
                 </BootstrapTable>
+                <pre>{JSON.stringify(formattedData, null, 2)}</pre>
             </div>
         );
     };
