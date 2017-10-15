@@ -6,6 +6,7 @@
     "axios": "^0.16.2",
     "bootstrap": "^3.3.7",
     "google-maps-react": "^1.1.0",
+    "moment-timezone": "^0.5.13",
     "react": "^15.0.0",
     "react-bootstrap": "^0.31.3",
     "react-bootstrap-table": "^4.0.6",
