@@ -61,7 +61,7 @@ export default class App extends Component {
                         <Navbar.Form pullRight className="icon">
                             showing:
                             {'  '}
-                            <Button bsStyle="link" onClick={this.updateStatusSort.bind(this, 'status')}>all</Button>
+                            <Button bsStyle="link" onClick={this.updateStatusSort.bind(this, 'all')}>all</Button>
                             {'|'}
                             <Button bsStyle="link" onClick={this.updateStatusSort.bind(this, 'pending')}>pending</Button>
                             {'|'}

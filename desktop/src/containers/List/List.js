@@ -7,6 +7,7 @@ export default class List extends Component {
         getAllReports: PropTypes.func,
         updateReportStatus: PropTypes.func,
         data: PropTypes.array,
+        statusSort:PropTypes.string,
     };
 
     constructor(props) {
@@ -34,7 +35,7 @@ export default class List extends Component {
     render() {
         const styles = require('./List.scss');
 
-        const formattedData = this.props.data.sort((prev, curr) => curr.createdAt - prev.createdAt).map((entry) => {
+        let formattedData = this.props.data.sort((prev, curr) => curr.createdAt - prev.createdAt).map((entry) => {
             return {
                 id: entry.id,
                 name: entry.name,
@@ -45,6 +46,9 @@ export default class List extends Component {
                 time: entry.createdAt,
             }
         });
+
+        formattedData = (this.props.statusSort !== 'all') ? this.props.data.filter((entry) => entry.status === this.props.statusSort) : this.props.data;
+
 
         const cellButton = (cell, row, enumObject, rowIndex) => {
             let theButton;

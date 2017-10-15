@@ -4,6 +4,7 @@ import MapComponent from '../../components/MapComponent';
 export default class MapContainer extends Component {
   static propTypes = {
     data: PropTypes.array,
+    statusSort: PropTypes.string,
   };
 
   constructor() {
@@ -33,11 +34,11 @@ export default class MapContainer extends Component {
   // };
 
   render() {
-    // const markers = this.displayMarkers();
+    const sortedData = (this.props.statusSort !== 'all') ? this.props.data.filter((entry) => entry.status === this.props.statusSort) : this.props.data;
 
     return (
       <MapComponent
-        data={this.props.data}
+        data={sortedData}
         location={this.state.location}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6Lhim26T6_uUFuofmuNuA1xfTQwj8J6A&v=3.exp&libraries=geometry,drawing,places"
         loadingElement={<div style={{ height: `100%` }} />}
