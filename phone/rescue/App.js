@@ -77,11 +77,12 @@ export default class App extends React.Component {
 
 	render() {
 		const { details, numFloors } = this.state;
-		console.log('app render state: ', this.state);
+		// console.log('app render state: ', this.state);
 		return (
 			<Screens
 				screenProps={{
 					_submitReport: this._submitReport,
+					details,
 					numFloors,
 					setValue: this.setValue
 				}}
