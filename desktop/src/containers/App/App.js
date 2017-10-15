@@ -22,6 +22,14 @@ export default class App extends Component {
         }
     }
 
+    addReport = newReport => {
+        this.setState(prevState => {
+            const copy = prevState.data.slice();
+            copy.push(newReport);
+            return { data: copy };
+        });
+    }
+
     getAllReports = () => {
         return axios.get(`http://18.216.36.119:3002/api/reports/`)
             .then((result) => this.setState({data: result.data.sort((prev, curr) => curr.createdAt - prev.createdAt)}));
@@ -77,7 +85,7 @@ export default class App extends Component {
                     </Navbar.Collapse>
                 </Navbar>
                 <div>
-                    {this.props.children && React.cloneElement(this.props.children, {updateReportStatus: this.updateReportStatus , getAllReports: this.getAllReports, data: this.state.data})}
+                    {this.props.children && React.cloneElement(this.props.children, {updateReportStatus: this.updateReportStatus, addReport: this.addReport, getAllReports: this.getAllReports, data: this.state.data})}
                 </div>
             </div>
         );
