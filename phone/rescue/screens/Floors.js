@@ -31,6 +31,8 @@ export default class Emergency extends React.Component {
 
 	changeToResources = () => {
 		const { navigate } = this.props.navigation;
+		const { setValue } = this.props.screenProps;
+		setValue('floor', this.state.floor);
 		navigate('Resources');
 	}
 

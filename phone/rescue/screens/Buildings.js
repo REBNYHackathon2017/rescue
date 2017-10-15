@@ -247,8 +247,11 @@ export default class Emergency extends React.Component {
 
 	chooseFloor = (building) => {
 		const{ navigate } = this.props.navigation;
-		this.props.screenProps.setValue('building', building.address);
-		this.props.screenProps.setValue('numFloors', building.numberOfFloors);
+		const { setValue } = this.props.screenProps;
+		setValue('building', building.address);
+		setValue('numFloors', building.numberOfFloors);
+		setValue('latitude', building.latitude);
+		setValue('longitude', building.longitude);
 		navigate('Floors');
 	}
 

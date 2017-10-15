@@ -13,8 +13,10 @@ const styles = StyleSheet.create({
 });
 
 export default class Emergency extends React.Component {
-	changeScreen = () => {
+	isEmergency = () => {
 		const { navigate } = this.props.navigation;
+		const { setValue } = this.props.screenProps;
+		setValue('emergency', true);
 		navigate('Favorites');
 	}
 
@@ -23,7 +25,7 @@ export default class Emergency extends React.Component {
 			<View style={styles.container}>
 				<Text>Does your emergency pose an immediate threat to someone’s life, safety, health, or property?</Text>
 				<Button color="gray" text="NO" />
-				<Button onPress={this.changeScreen} text="YES" />
+				<Button onPress={this.isEmergency} text="YES" />
 			</View>
 		);
 	}

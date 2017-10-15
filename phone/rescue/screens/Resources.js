@@ -34,7 +34,14 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default class Emergency extends React.Component {
+export default class Resources extends React.Component {
+	updateResource = (resource) => {
+		const { navigate } = this.props.navigation;
+		const { setValue } = this.props.screenProps;
+		setValue('resource', resource.toLowerCase());
+		navigate(resource);
+	}
+
 	render() {
 		const { navigate } = this.props.navigation;
 
@@ -42,7 +49,7 @@ export default class Emergency extends React.Component {
 			<View style={styles.container}>
 				<View style={styles.imageRow}>
 					<View style={styles.group}>
-						<TouchableHighlight onPress={() => navigate('Medical')}>
+						<TouchableHighlight onPress={this.updateResource.bind(this, 'Medical')}>
 							<Image style={styles.image} source={medical}/>
 						</TouchableHighlight>
 						<Text>Medical</Text>
