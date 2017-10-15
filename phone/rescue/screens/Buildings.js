@@ -24,6 +24,7 @@ export default class Emergency extends React.Component {
 			buildings: [],
 			index: 0,
 			location: null,
+			search: '',
 		};
 	}
 
@@ -80,22 +81,29 @@ export default class Emergency extends React.Component {
 	}
 
 	updateIndex = (index) => {
-		this.setState({ index })
+		this.setState({ index });
+	}
+
+	updateSearch = (search) => {
+		this.setState({ search });
 	}
 
 	render() {
-		const { buildings, index, location } = this.state;
+		const { buildings, index, location, search } = this.state;
+		const filteredBuildings = buildings.filter((building) => {
+			return building.address.toLowerCase().includes(search.toLowerCase());
+		});
 		return (
 			<View style={{...StyleSheet.absoluteFillObject}}>
 				<SearchBar
 					lightTheme
-					onChangeText={() => {}}
+					onChangeText={this.updateSearch}
 					placeholder='Search for a location'
 				/>
 				<ScrollView style={{ margin: 0 }}>
 						<List containerStyle={{ marginBottom: 5 }}>
 						{
-							buildings.slice(0, 8).map((building, i) => {
+							filteredBuildings.slice(0, 8).map((building, i) => {
 								return (
 									<ListItem
 										key={building.id}
