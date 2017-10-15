@@ -1,24 +1,23 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
-import MapComponent from '../../components/MapComponent';
+import MapDirections from '../../components/MapDirections';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import license from '../../assets/license.png';
 const moment = require('moment-timezone');
 
+
 export default class Detail extends Component {
-    static propTypes = {
-        params: PropTypes.object, // from react router
-        getAllReports: PropTypes.func,
+
+    state = {
+        entryFromSameNumber: []
     };
 
-    componentWillMount() {
-        const selectedEntry = this.props.data.filter((entry) => Number(entry.id) === Number(this.props.params.id));
-        const entryFromSameNumber = (selectedEntry && selectedEntry.length) ? this.props.data.filter((entry) => selectedEntry[0].mobile === entry.mobile) : this.props.data.slice();
-        this.setState({selectedEntry, entryFromSameNumber});
-    }
-
     componentDidMount() {
-        return this.props.getAllReports();
+        console.log('DATTAAA', this.props.data)
+        const selectedEntry = this.props.data.filter((entry) => Number(entry.id) === Number(this.props.params.id))[0];
+        console.log('SELECTED', selectedEntry)
+        const entryFromSameNumber = (selectedEntry && selectedEntry.length) ? this.props.data.filter((entry) => selectedEntry[0].mobile === entry.mobile) : this.props.data.slice();
+        this.setState({ selectedEntry, entryFromSameNumber });
     }
 
     formatNumber = (mobile) => {
@@ -27,7 +26,6 @@ export default class Detail extends Component {
     };
 
     render() {
-        const selectedEntry = this.state.selectedEntry[0] || {};
         const formattedData = this.state.entryFromSameNumber.sort((perv, curr) => perv.createdAt - curr.createdAt).map((entry) => {
             return {
                 id: entry.id,
@@ -62,6 +60,9 @@ export default class Detail extends Component {
             sizePerPage: 3,
         };
 
+        console.log('ITTT', this.state.selectedEntry)
+        if (!this.props.location || !this.state.selectedEntry) return <div></div>
+        const { selectedEntry } = this.state;
         return (
             <div>
                 <style>{require('../List/styleHack')}</style>
@@ -129,9 +130,10 @@ export default class Detail extends Component {
                         </Col>
                         <Col md={6}>
                             <h4>Responding To: <span className="selectedLink">{selectedEntry.resource} > {selectedEntry.issue}</span></h4>
-                            <MapComponent
+                            <MapDirections
                                 data={this.state.entryFromSameNumber}
-                                location={this.state.location}
+                                origin={this.props.location}
+                                destination={this.state.selectedEntry}
                                 googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6Lhim26T6_uUFuofmuNuA1xfTQwj8J6A&v=3.exp&libraries=geometry,drawing,places"
                                 loadingElement={<div style={{height: `100%`}}/>}
                                 containerElement={<div style={{height: `550px`}}/>}

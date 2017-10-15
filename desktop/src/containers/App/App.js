@@ -4,22 +4,28 @@ import list from '../../assets/Asset_2_list.svg';
 import main from '../../assets/Asset_4_map.svg';
 import details from '../../assets/Asset_1_setting.svg';
 import './App.css';
-import {Navbar, FormGroup, FormControl, Button} from 'react-bootstrap';
+import {Navbar, Button} from 'react-bootstrap';
 import axios from 'axios';
 
 export default class App extends Component {
 
-    componentWillMount() {
-        return axios.get(`http://18.216.36.119:3002/api/reports/`)
-            .then((result) => this.setState({data: result.data}));
-    }
-
     constructor(props) {
         super(props);
         this.state = {
-            data: [{}],
+            data: [],
             statusSort: 'all',
         }
+    }
+
+    componentDidMount() {
+        return axios.get(`http://18.216.36.119:3002/api/reports/`)
+            .then(result => {
+                this.setState({ data: result.data }, () => {
+                    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } } = { coords: {} }) => {
+                        this.setState({ location: { lat: latitude, lng: longitude } }, () => console.log('SET'));
+                    });
+                })
+            });
     }
 
     addReport = newReport => {
@@ -45,7 +51,6 @@ export default class App extends Component {
     };
 
     render() {
-
         return (
             <div>
                 <Navbar>
@@ -126,10 +131,10 @@ export default class App extends Component {
                 < div >
                     {this.props.children && React.cloneElement(this.props.children, {
                         updateReportStatus: this.updateReportStatus,
-                        getAllReports: this.getAllReports,
                         statusSort: this.state.statusSort,
                         data: this.state.data,
-                        addReport: this.addReport
+                        addReport: this.addReport,
+                        location: this.state.location
                     })
                     }
                 </div>

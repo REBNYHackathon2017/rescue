@@ -11,7 +11,6 @@ const Routes = (props) => (
         <Route path="/" component={App}>
             <IndexRoute component={Map}/>
             <Route title="Main" path="main" component={Map}/>
-            <IndexRoute component={Map}/>
             <Route title="List" path="list">
                 <IndexRoute component={List}/>
                 <Route title="detail" path=":id" component={Detail}/>
