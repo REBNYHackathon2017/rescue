@@ -2,8 +2,9 @@ import React, {Component, PropTypes} from 'react';
 import io from 'socket.io-client';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Link} from 'react-router';
-const moment = require('moment-timezone');
 import AlertContainer from 'react-alert';
+import phone from '../../assets/alert_phone.png';
+const moment = require('moment-timezone');
 
 export default class List extends Component {
     static propTypes = {
@@ -38,7 +39,7 @@ export default class List extends Component {
         this.msg.show('New Emergency Report', {
           time: 2000,
           type: 'error',
-          icon: <img height="32" width="32" src="https://cdn.pixabay.com/photo/2014/03/25/15/24/red-296733_1280.png" />
+          icon: <img height="32" width="32" src={phone} />
         })
     }
 

@@ -59,13 +59,6 @@ export default class App extends Component {
                         <Navbar.Toggle />
                     </Navbar.Header>
                     <Navbar.Collapse>
-                        <Navbar.Form pullLeft>
-                            <FormGroup>
-                                <FormControl type="text" placeholder="Search"/>
-                            </FormGroup>
-                            {' '}
-                            <Button type="submit"><img src={search} alt="search"/></Button>
-                        </Navbar.Form>
                         <Navbar.Form pullRight className="icon">
                             showing:
                             {'  '}
