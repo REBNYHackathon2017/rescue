@@ -15,7 +15,6 @@ export default class Detail extends Component {
     componentDidMount() {
         console.log('DATTAAA', this.props.data)
         const selectedEntry = this.props.data.filter((entry) => Number(entry.id) === Number(this.props.params.id))[0];
-        console.log('SELECTED', selectedEntry)
         const entryFromSameNumber = (selectedEntry && selectedEntry.length) ? this.props.data.filter((entry) => selectedEntry[0].mobile === entry.mobile) : this.props.data.slice();
         this.setState({ selectedEntry, entryFromSameNumber });
     }
@@ -60,7 +59,6 @@ export default class Detail extends Component {
             sizePerPage: 3,
         };
 
-        console.log('ITTT', this.state.selectedEntry)
         if (!this.props.location || !this.state.selectedEntry) return <div></div>
         const { selectedEntry } = this.state;
         return (
