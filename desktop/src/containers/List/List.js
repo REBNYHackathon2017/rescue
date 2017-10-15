@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import io from 'socket.io-client';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Link} from 'react-router';
 
@@ -8,6 +9,11 @@ export default class List extends Component {
         updateReportStatus: PropTypes.func,
         data: PropTypes.array,
     };
+
+    componentDidMount() {
+        const socket = io('http://18.216.36.119:3002');
+        socket.on('create', data => this.props.addReport(data));
+    }
 
     constructor(props) {
         super(props);

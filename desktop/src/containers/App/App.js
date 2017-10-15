@@ -22,10 +22,12 @@ export default class App extends Component {
         }
     }
 
-    addReport(newReport) {
-        this.setState(prevState => ({
-            data: prevState.slice().push(newReport)
-        }));
+    addReport = newReport => {
+        this.setState(prevState => {
+            const copy = prevState.data.slice();
+            copy.push(newReport);
+            return { data: copy };
+        });
     }
 
     getAllReports = () => {
@@ -83,7 +85,7 @@ export default class App extends Component {
                     </Navbar.Collapse>
                 </Navbar>
                 <div>
-                    {this.props.children && React.cloneElement(this.props.children, {updateReportStatus: this.updateReportStatus, addReport: this.newReport, getAllReports: this.getAllReports, data: this.state.data})}
+                    {this.props.children && React.cloneElement(this.props.children, {updateReportStatus: this.updateReportStatus, addReport: this.addReport, getAllReports: this.getAllReports, data: this.state.data})}
                 </div>
             </div>
         );
