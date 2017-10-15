@@ -23,6 +23,14 @@ export default class App extends Component {
         }
     }
 
+    addReport = newReport => {
+        this.setState(prevState => {
+            const copy = prevState.data.slice();
+            copy.push(newReport);
+            return { data: copy };
+        });
+    }
+
     getAllReports = () => {
         return axios.get(`http://18.216.36.119:3002/api/reports/`)
             .then((result) => this.setState({data: result.data.sort((prev, curr) => curr.createdAt - prev.createdAt)}));
@@ -128,7 +136,8 @@ export default class App extends Component {
                         updateReportStatus: this.updateReportStatus,
                         getAllReports: this.getAllReports,
                         statusSort: this.state.statusSort,
-                        data: this.state.data
+                        data: this.state.data,
+                        addReport: this.addReport
                     })
                     }
                 </div>
