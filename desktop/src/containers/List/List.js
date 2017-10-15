@@ -74,6 +74,7 @@ export default class List extends Component {
                 emergency: entry.issue,
                 status: entry.status,
                 time: moment(entry.createdAt).tz('America/New_York').format('MMMM Do YYYY, h:mm a'),
+                createdAt: entry.createdAt,
             }
         });
 
