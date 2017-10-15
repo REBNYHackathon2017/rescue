@@ -61,17 +61,13 @@ export default class Status extends React.Component {
 	componentDidMount() {
 		const socket = io('http://18.216.36.119:3002');
         socket.on('update', data => {
-			console.log('data.id: ', data.id, typeof data.id);
-			console.log('id: ', this.props.screenProps.id, typeof this.props.screenProps.id);
-			console.log('equal?', data.id === this.props.screenProps.id);
 			if (data.id === this.props.screenProps.id) {
 				if (data.status === 'dispatched') {
-					this.setState({ dispatched });
+					this.setState({ dispatched: true });
 				} else if (data.status === 'resolved') {
-					this.setState({ resolved });
+					this.setState({ resolved: true });
 				}
 			}
-			console.log('data: ', data);
         });
 	}
 

@@ -56,7 +56,6 @@ export default class App extends React.Component {
 		try {
 			let response = await fetch('http://18.216.36.119:3002/api/reports/', config);
 			const parsed = JSON.parse(response._bodyText);
-			console.log('parsed: ', parsed.id);
 			this.setState({ id: parsed.id });
 
 		} catch(error) {
