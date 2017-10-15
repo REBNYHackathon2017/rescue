@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Link} from 'react-router';
-import axios from 'axios';
 
 export default class List extends Component {
     static propTypes = {
@@ -15,12 +14,7 @@ export default class List extends Component {
         this.state = {};
     }
 
-    // goToDetail = (entry) => {
-    //     this.goToState(entry.id);
-    // };
-
     updateCellStatus = (entry) => {
-        console.log('entry being passe in function updateCellStatus', entry);
         let nextStatus;
 
         switch (entry.status) {
@@ -80,6 +74,11 @@ export default class List extends Component {
             );
         };
 
+        const tableOptions = {
+            sortName: 'time',
+            sortOrder: 'desc',
+        };
+
         return (
             <div>
                 <style>{require('./styleHack')}</style>
@@ -87,6 +86,7 @@ export default class List extends Component {
                                 headerStyle={ {color: "red"} }
                                 striped={true}
                                 hover={true}
+                                options={tableOptions}
                                 pagination
                                 keyField="id">
                     <TableHeaderColumn dataField="name"
