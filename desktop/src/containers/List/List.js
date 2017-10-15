@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import mockData from './mockData';
 import {Link} from 'react-router';
 
 export default class List extends Component {
-
-    componentWillMount() {
-        this.setState({data: mockData});
+    static propTypes = {
+        getAllReports: PropTypes.func,
+        data: PropTypes.array,
     };
 
     constructor(props) {
@@ -26,7 +26,7 @@ export default class List extends Component {
     render() {
         const styles = require('./List.scss');
 
-        const formattedData = this.state.data.map((entry) => {
+        const formattedData = this.props.data.map((entry) => {
             return {
                 id: entry.id,
                 name: 'John Smith',
@@ -102,7 +102,6 @@ export default class List extends Component {
                                        dataAlign="center">
                     </TableHeaderColumn>
                 </BootstrapTable>
-                <pre>{JSON.stringify(this.state, null, 2)}</pre>
             </div>
         );
     };
