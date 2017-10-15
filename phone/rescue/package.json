@@ -26,6 +26,7 @@
     "react-native-autogrow-textinput": "^4.1.0",
     "react-native-elements": "^0.17.0",
     "react-native-maps": "^0.17.0",
-    "react-navigation": "^1.0.0-beta.13"
+    "react-navigation": "^1.0.0-beta.13",
+    "socket.io-client": "^2.0.3"
   }
 }
