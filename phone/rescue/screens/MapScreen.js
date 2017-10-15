@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
 });
 
 export default class MapScreen extends React.Component {
+	static navigationOptions = {
+		title: 'Map',
+	};
 	constructor() {
 		super();
 		this.state = {

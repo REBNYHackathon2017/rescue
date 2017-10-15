@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
 });
 
 export default class Emergency extends React.Component {
+	static navigationOptions = {
+		title: 'Building Floor',
+	};
+
 	constructor() {
 		super();
 		this.state = {

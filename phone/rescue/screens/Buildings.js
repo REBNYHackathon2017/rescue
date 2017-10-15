@@ -18,6 +18,10 @@ const styles = StyleSheet.create({
 });
 
 export default class Emergency extends React.Component {
+	static navigationOptions = {
+		title: 'Nearby Buildings',
+	};
+
 	constructor() {
 		super();
 		this.state = {

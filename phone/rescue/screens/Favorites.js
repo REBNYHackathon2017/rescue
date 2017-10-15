@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { HeaderBackButton } from 'react-navigation';
 
 import Button from '../components/CustomButton';
 
@@ -19,9 +20,22 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+	top: {
+		backgroundColor: '#d1c5c6',
+		flex: .1,
+		alignItems: 'center',
+	},
+	topHeader: {
+		height: 70,
+		width: 100,
+	},
 });
 
 export default class Favorites extends React.Component {
+	static navigationOptions = {
+		title: 'Stored Locations',
+	};
+
 	changeScreen = () => {
 		const { navigate } = this.props.navigation;
 		navigate('Buildings');

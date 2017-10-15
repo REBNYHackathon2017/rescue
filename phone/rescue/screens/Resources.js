@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
 });
 
 export default class Resources extends React.Component {
+	static navigationOptions = {
+		title: 'Emergency Type',
+	};
+
 	updateResource = (resource) => {
 		const { navigate } = this.props.navigation;
 		const { setValue } = this.props.screenProps;

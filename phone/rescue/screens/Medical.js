@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
 });
 
 export default class Medical extends React.Component {
+	static navigationOptions = {
+		title: 'Medical Issue',
+	};
 	updateIssue(issue) {
 		const { navigate } = this.props.navigation;
 		const { setValue } = this.props.screenProps;

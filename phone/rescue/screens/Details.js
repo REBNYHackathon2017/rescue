@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
 });
 
 export default class Details extends React.Component {
+	static navigationOptions = {
+		title: 'Details and Submit',
+	};
 	constructor() {
 		super();
 		this.state = { text: '' };
@@ -46,7 +49,7 @@ export default class Details extends React.Component {
 				clearInterval(this.waitForState);
 			}
 		}, 500);
-		// navigate('Status');
+		navigate('Status');
 	};
 
 	submit = () => {
