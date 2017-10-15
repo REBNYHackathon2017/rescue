@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		padding: 10,
 	},
+	text: {
+		color: 'gray',
+		fontSize: 22,
+	},
 });
 
 export default class Resources extends React.Component {
@@ -56,33 +60,33 @@ export default class Resources extends React.Component {
 						<TouchableHighlight onPress={this.updateResource.bind(this, 'Medical')}>
 							<Image style={styles.image} source={medical}/>
 						</TouchableHighlight>
-						<Text>Medical</Text>
+						<Text style={styles.text}>Medical</Text>
 					</View>
 					<View style={styles.group}>
 						<TouchableHighlight onPress={this.updateResource.bind(this, 'Medical')}>
 							<Image style={styles.image} source={fire}/>
 						</TouchableHighlight>
-						<Text>Fire & Rescue</Text>
+						<Text style={styles.text}>Fire & Rescue</Text>
 					</View>
 				</View>
 				<View style={styles.imageRow}>
 					<View style={styles.group}>
 						<Image style={styles.image} source={police}/>
-						<Text>Police</Text>
+						<Text style={styles.text}>Police</Text>
 					</View>
 					<View style={styles.group}>
 						<Image style={styles.image} source={nature}/>
-						<Text>Nature</Text>
+						<Text style={styles.text}>Nature</Text>
 					</View>
 				</View>
 				<View style={styles.imageRow}>
 					<View style={styles.group}>
 						<Image style={styles.image} source={building}/>
-						<Text>Nature</Text>
+						<Text style={styles.text}>Nature</Text>
 					</View>
 					<View style={styles.group}>
 						<Image style={styles.image} source={other}/>
-						<Text>Other</Text>
+						<Text style={styles.text}>Other</Text>
 					</View>
 				</View>
 			</View>
