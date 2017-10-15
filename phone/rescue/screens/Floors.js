@@ -1,22 +1,73 @@
 import React from 'react';
 import { Constants, Location, Permissions } from 'expo';
-import { FlatList, Picker, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { List, ListItem, ListView, SearchBar } from 'react-native-elements';
+import { Picker, StyleSheet, Text, View } from 'react-native';
+import { SearchBar } from 'react-native-elements';
+
 import Button from '../components/CustomButton';
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		// flexDirection: 'column',
 		backgroundColor: '#fff',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-	scroll: {
-		position: 'absolute',
-		top: 0,
-	},
 });
+
+// const BUILDINGS = [
+// 	{
+// 		address: '10 SOUTH STREET',
+// 		numberOfFloors: 5,
+// 		XCoord: 981037,
+// 		YCoord: 194506,
+// 		zip: 10004,
+// 		ownerName: '10 SSA LANDLORD, LLC',
+// 		healthArea: '7700',
+// 		policePrecinct: '1',
+// 		fireCompany: 'L015',
+// 		latitude: 40.70055018440018,
+// 		longitude: -74.0115876259819,
+// 	},
+// 	{
+// 		address: '15 SOUTH STREET',
+// 		numberOfFloors: 5,
+// 		XCoord: 981037,
+// 		YCoord: 194506,
+// 		zip: 10004,
+// 		ownerName: '15 SSA LANDLORD, LLC',
+// 		healthArea: '7700',
+// 		policePrecinct: '1',
+// 		fireCompany: 'L015',
+// 		latitude: 40.70055018440018,
+// 		longitude: -74.0115876259819,
+// 	},
+// 	{
+// 		address: '20 SOUTH STREET',
+// 		numberOfFloors: 5,
+// 		XCoord: 981037,
+// 		YCoord: 194506,
+// 		zip: 10004,
+// 		ownerName: '20 SSA LANDLORD, LLC',
+// 		healthArea: '7700',
+// 		policePrecinct: '1',
+// 		fireCompany: 'L015',
+// 		latitude: 40.70055018440018,
+// 		longitude: -74.0115876259819,
+// 	},
+// 	{
+// 		address: '25 SOUTH STREET',
+// 		numberOfFloors: 5,
+// 		XCoord: 981037,
+// 		YCoord: 194506,
+// 		zip: 10004,
+// 		ownerName: '25 SSA LANDLORD, LLC',
+// 		healthArea: '7700',
+// 		policePrecinct: '1',
+// 		fireCompany: 'L015',
+// 		latitude: 40.70055018440018,
+// 		longitude: -74.0115876259819,
+// 	},
+// ];
 
 const BUILDINGS = [
 	{
@@ -218,14 +269,14 @@ export default class Emergency extends React.Component {
 		if (location && location.coords && location.coords.latitude && location.coords.longitude) {
 			const lat = location.coords.latitude;
 			const long = location.coords.longitude;
-			// this.props.screenProps.setValue('longitude', lat);
-			// this.props.screenProps.setValue('latitude', long);
+			this.props.screenProps.setValue('longitude', lat);
+			this.props.screenProps.setValue('latitude', long);
 			// buildings = this._getNearbyBuildingsAsync(lat, long);
 		}
 
 		this.setState({ location });
 		if (buildings) {
-			// this.setState({ buildings });
+			this.setState({ buildings });
 		}
 	};
 
@@ -233,7 +284,7 @@ export default class Emergency extends React.Component {
 		try {
 			let response = await fetch(`http://18.216.36.119:3002/api/buildings/near?lat=${lat}&lng=${long}`);
 			let responseJson = await response.json();
-			// this.setState({ buildings: responseJson });
+			this.setState({ buildings: responseJson });
 			return responseJson;
 		  } catch(error) {
 			console.error(error);
@@ -245,12 +296,6 @@ export default class Emergency extends React.Component {
 		navigate('MapScreen');
 	}
 
-	chooseFloor = (building) => {
-		const{ navigate } = this.props.navigation;
-		this.props.screenProps.setValue('building', building);
-		navigate('Floors');
-	}
-
 	updateIndex = (index) => {
 		this.setState({ index })
 	}
@@ -258,35 +303,34 @@ export default class Emergency extends React.Component {
 	render() {
 		const { buildings, index, location } = this.state;
 		return (
-			<View style={{...StyleSheet.absoluteFillObject}}>
+			<View >
 				<SearchBar
 					lightTheme
 					onChangeText={() => {}}
 					placeholder='Search for a location'
 				/>
-				<ScrollView style={{ margin: 0 }}>
-					<List containerStyle={{ marginBottom: 5 }}>
-						{
-							BUILDINGS.slice(0, 8).map((building, i) => {
-								return (
-									<ListItem
-										key={building.id}
-										onPress={this.chooseFloor.bind(this, building)}
-										subtitle={`New York, NY ${building.zip}`}
-										title={building.address}
-									/>
-								);
-							})
-						}
-					</List>
-					<View style={{ marginBottom: 10 }}>
-						<Button
-							onPress={this.changeToMapScreen}
-							text="USE MAP INSTEAD"
-						/>
-					</View>
-				</ScrollView>
+				<Picker selectedValue={BUILDINGS[index]} onValueChange = {this.updateIndex}>
+					{
+						BUILDINGS.map((building, i) => {
+							return (
+								<Picker.Item
+									key={`${building.address}_${i}`}
+									label={building.address}
+									value={building.address}
+								/>
+							);
+						})
+					}
+				</Picker>
+				<Button
+					onPress={this.changeToMapScreen}
+					text="USE MAP"
+				/>
 			</View>
 		);
 	}
 }
+
+// { location ? (<Text>{JSON.stringify(location)}</Text>) : <Text/> }
+// { buildings ? (<Text>{JSON.stringify(buildings)}</Text>) : <Text/> }
+
