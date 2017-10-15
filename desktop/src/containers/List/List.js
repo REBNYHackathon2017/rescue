@@ -84,14 +84,14 @@ export default class List extends Component {
             let theButton;
 
             if (row.status === 'pending') {
-                theButton = <button style={{backgroundColor: "#DE0A1A", width: "75px", color: "white", height: "30px"}}
+                theButton = <button className="button red"
                                     type="button"
                                     onClick={this.updateCellStatus.bind(this, row)}>
                     Dispatch
                 </button>
             }
             if (row.status === 'dispatched') {
-                theButton = <button style={{backgroundColor: "#808080", width: "75px", color: "white", height: "30px"}}
+                theButton = <button className="button default"
                                     type="button"
                                     onClick={this.updateCellStatus.bind(this, row)}>
                     Resolve
