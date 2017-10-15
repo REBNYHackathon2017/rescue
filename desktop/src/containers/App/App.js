@@ -72,7 +72,7 @@ export default class App extends Component {
                     </Navbar.Collapse>
                 </Navbar>
                 <div>
-                    {this.props.children && React.cloneElement(this.props.children, {getAllReports: this.getAllReports, data: this.state.data})}
+                    {this.props.children && React.cloneElement(this.props.children, {getAllReports: this.getAllReports.bind(this), data: this.state.data})}
                 </div>
             </div>
         );

@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import MapComponent from '../../components/MapComponent';
-import {Marker} from 'react-google-maps';
 
 export default class MapContainer extends Component {
   static propTypes = {

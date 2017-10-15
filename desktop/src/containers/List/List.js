@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import mockData from './mockData';
 import {Link} from 'react-router';
 
 export default class List extends Component {
@@ -29,7 +28,7 @@ export default class List extends Component {
         const formattedData = this.props.data.map((entry) => {
             return {
                 id: entry.id,
-                name: 'John Smith',
+                name: entry.name,
                 location: entry.building,
                 response: entry.resource,
                 emergency: entry.issue,
@@ -52,7 +51,7 @@ export default class List extends Component {
                 theButton = <button style={{backgroundColor: "#808080", width: "75px", color: "white", height: "30px"}}
                                     type="button"
                                     onClick={this.updateCellStatus.bind(this, row)}>
-                    Abort
+                    Resolved
                 </button>
             }
 
