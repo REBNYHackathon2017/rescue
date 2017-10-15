@@ -84,7 +84,6 @@ export default class App extends Component {
                 <div>
                     {this.props.children && React.cloneElement(this.props.children, {updateReportStatus: this.updateReportStatus , getAllReports: this.getAllReports, statusSort: this.state.statusSort, data: this.state.data})}
                 </div>
-                <pre>{JSON.stringify(this.state, null, 2)}</pre>
             </div>
         );
     }
