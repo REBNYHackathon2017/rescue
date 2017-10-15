@@ -24,6 +24,7 @@ export default class CustomButton extends React.Component {
 						margin: 10,
 						width: 300,
 					}}
+					fontWeight='bold'
 					large={true}
 					onPress={onPress}
 					title={text}
