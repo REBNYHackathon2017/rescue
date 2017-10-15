@@ -11,11 +11,12 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	opener: {
-		fontSize: 25,
+		fontSize: 22,
 		marginBottom: 20,
 	},
 	question: {
-		fontSize: 25,
+		fontSize: 22,
+		fontWeight: 'bold',
 	},
 	textGroup: {
 		alignItems: 'center',
