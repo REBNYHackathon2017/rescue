@@ -14,7 +14,6 @@ import Resources from './screens/Resources';
 import Status from './screens/Status';
 
 const Screens = StackNavigator({
-	Status: { screen: Status },
 	Emergency: { screen: Emergency },
 	Favorites: { screen: Favorites },
 	Buildings: { screen: Buildings },
@@ -23,6 +22,7 @@ const Screens = StackNavigator({
 	Resources: { screen: Resources },
 	Medical: { screen: Medical },
 	Details: { screen: Details },
+	Status: { screen: Status },
 });
 
 export default class App extends React.Component {
@@ -33,6 +33,7 @@ export default class App extends React.Component {
 			details: '',
 			emergency: false,
 			floor: null,
+			id: null,
 			issue: null,
 			latitude: null,
 			longitude: null,
@@ -46,7 +47,7 @@ export default class App extends React.Component {
 	};
 
 	_submitReport = async () => {
-		const report = _.omit(this.state, 'numFloors');
+		const report = _.omit(this.state, ['numFloors', 'id']);
 		const config = {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -54,6 +55,7 @@ export default class App extends React.Component {
 		};
 		try {
 			let response = await fetch('http://18.216.36.119:3002/api/reports/', config);
+			this.setState({ id: response.id });
 			console.log('response: ', response);
 		} catch(error) {
 			console.error(error);
@@ -61,20 +63,21 @@ export default class App extends React.Component {
 	}
 
 	render() {
-		const fake = {
-			"emergency": true,
-			"latitude": "40.741135",
-			"longitude": "-74.008047",
-			"building": "848 WASHINGTON STREET",
-			"floor": 18,
-			"resource": "medical",
-			"issue": "stroke",
-			"details": "i think my husband is having a stroke"
-		};
-		const { building, details, floor, issue, resource } = fake;
-		const numFloors = 3;
+		// const fake = {
+		// 	"emergency": true,
+		// 	"latitude": "40.741135",
+		// 	"longitude": "-74.008047",
+		// 	"building": "848 WASHINGTON STREET",
+		// 	"floor": 18,
+		// 	"resource": "medical",
+		// 	"id": 54,
+		// 	"issue": "stroke",
+		// 	"details": "i think my husband is having a stroke"
+		// };
+		// const { building, details, floor, id, issue, resource } = fake;
+		// const numFloors = 3;
 
-		// const { details, issue, numFloors, resource } = this.state;
+		const { building, details, floor, id, issue, numFloors, resource } = this.state;
 		return (
 			<Screens
 				screenProps={{
@@ -82,6 +85,7 @@ export default class App extends React.Component {
 					building,
 					details,
 					floor,
+					id,
 					issue,
 					numFloors,
 					resource,

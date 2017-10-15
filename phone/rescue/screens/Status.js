@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import io from 'socket.io-client';
 
 import Button from '../components/CustomButton';
 
@@ -58,12 +59,25 @@ export default class Status extends React.Component {
 	}
 
 	componentDidMount() {
-		const
+		const socket = io('http://18.216.36.119:3002');
+        socket.on('update', data => {
+			console.log('data.id: ', data.id, typeof data.id);
+			console.log('id: ', this.props.screenProps.id, typeof this.props.screenProps.id);
+			console.log('equal?', data.id === this.props.screenProps.id);
+			if (data.id === this.props.screenProps.id) {
+				if (data.status === 'dispatched') {
+					this.setState({ dispatched });
+				} else if (data.status === 'resolved') {
+					this.setState({ resolved });
+				}
+			}
+			console.log('data: ', data);
+        });
 	}
 
 	render() {
 		const { building, details, floor, issue, resource } = this.props.screenProps;
-		const { acknowledged, dispatched, resolved } = this.state;
+		const { dispatched, resolved } = this.state;
 		return (
 			<View style={styles.container}>
 				<View style={styles.reportGroup}>
