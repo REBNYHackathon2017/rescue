@@ -7,7 +7,7 @@ module.exports = server => {
 	io = socketio(server);
 
 	io.on('connection', socket => {
-		console.log('HI!', socket);
+		console.log('HI!', socket.id);
 	});
 
 	return io;

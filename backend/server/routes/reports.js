@@ -2,6 +2,12 @@ const router = require('express').Router();
 
 const { Reports } = require('../../db');
 
+let io;
+const initializeIO = () => {
+	if (io) return io;
+	io = require('../../io')();
+};
+
 
 router.use('/:reportId', (req, res, next) => {
 	Reports.findById(req.params.reportId)
@@ -10,10 +16,11 @@ router.use('/:reportId', (req, res, next) => {
 				req.report = report;
 				next();
 			}
-			else res.send('Report not found');
+			else next()
 		})
 		.catch(next);
 });
+
 
 router.get('/', (req, res, next) => {
 	Reports.findAll({ raw: true })
@@ -21,15 +28,29 @@ router.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+
 router.post('/', (req, res, next) => {
+	initializeIO();
+	let newReport;
 	Reports.create(req.body, { returning: true })
-		.then(newReport => res.status(201).json(newReport))
+		.then(report => {
+			newReport = report.get();
+			res.status(201).json(newReport);
+		})
+		.then(() => io.emit('create', newReport))
 		.catch(next);
 });
 
-router.get('/:reportId', (req, res, next) => res.status(200).json(req.report));
+
+router.get('/:reportId', (req, res, next) => {
+	if (req.report) res.status(200).json(req.report);
+	else res.status(404).send('Report not found');
+});
+
 
 router.put('/:reportId', (req, res, next) => {
+	initializeIO();
+	if (!req.report) res.status(404).send('Report not found');
 	const report = req.report.get();
 	// Build fresh update object (rather than put user input straight into the DB)
 	const update = {};
@@ -39,14 +60,25 @@ router.put('/:reportId', (req, res, next) => {
 		}
 	}
 
+	let updatedReport;
+
 	req.report.update(update, { returning: true })
-		.then(updatedReport => res.status(201).json(updatedReport.get()))
+		.then(report => {
+			updatedReport = report.get();
+			return res.status(201).json(updatedReport);
+		})
+		.then(() => io.emit('update', updatedReport))
 		.catch(next);
 });
 
+
 router.delete('/:reportId', (req, res, next) => {
+	initializeIO();
+	if (!req.report) res.status(404).json('Report not found.');
+	const id = req.params.reportId;
 	req.report.destroy()
-		.then(() => res.status(204).send(`Report ${req.param.reportId} deleted.`))
+		.then(() => res.status(204).send(`Report ${id} deleted.`))
+		.then(() => io.emit('delete', id))
 		.catch(next);
 });
 

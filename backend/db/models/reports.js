@@ -7,11 +7,11 @@ const Reports = sequelize.define('Reports', {
 		defaultValue: false
 	},
 	latitude: {
-		type: Sequelize.DECIMAL,
+		type: Sequelize.STRING,
 		allowNull: false
 	},
 	longitude: {
-		type: Sequelize.DECIMAL,
+		type: Sequelize.STRING,
 		allowNull: false
 	},
 	xCoord: Sequelize.INTEGER,
