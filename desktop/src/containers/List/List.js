@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import io from 'socket.io-client';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Link} from 'react-router';
+import AlertContainer from 'react-alert';
 
 export default class List extends Component {
     static propTypes = {
@@ -12,12 +13,31 @@ export default class List extends Component {
 
     componentDidMount() {
         const socket = io('http://18.216.36.119:3002');
-        socket.on('create', data => this.props.addReport(data));
+        socket.on('create', data => {
+            this.props.addReport(data);
+            this.showAlert();
+        });
     }
 
     constructor(props) {
         super(props);
         this.state = {};
+    }
+
+    alertOptions = {
+        offset: 14,
+        position: 'top left',
+        theme: 'dark',
+        time: 5000,
+        transition: 'scale'
+    }
+     
+    showAlert = () => {
+        this.msg.show('New Emergency Report', {
+          time: 2000,
+          type: 'error',
+          icon: <img height="32" width="32" src="https://cdn.pixabay.com/photo/2014/03/25/15/24/red-296733_1280.png" />
+        })
     }
 
     updateCellStatus = (entry) => {
@@ -87,6 +107,7 @@ export default class List extends Component {
 
         return (
             <div>
+                <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
                 <style>{require('./styleHack')}</style>
                 <BootstrapTable data={formattedData}
                                 headerStyle={ {color: "red"} }
