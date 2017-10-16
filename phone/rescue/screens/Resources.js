@@ -70,9 +70,7 @@ export default class Resources extends React.Component {
 						<Text style={styles.text}>Medical</Text>
 					</View>
 					<View style={styles.group}>
-						<TouchableHighlight onPress={this.updateResource.bind(this, 'Medical')}>
-							<Image style={styles.image} source={fire}/>
-						</TouchableHighlight>
+						<Image style={styles.image} source={fire}/>
 						<Text style={styles.text}>Fire & Rescue</Text>
 					</View>
 				</View>
@@ -89,7 +87,7 @@ export default class Resources extends React.Component {
 				<View style={styles.imageRow}>
 					<View style={styles.group}>
 						<Image style={styles.image} source={building}/>
-						<Text style={styles.text}>Nature</Text>
+						<Text style={styles.text}>Building</Text>
 					</View>
 					<View style={styles.group}>
 						<Image style={styles.image} source={other}/>
