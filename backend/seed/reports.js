@@ -1,5 +1,8 @@
+'use strict';
+
+const Promise = require('bluebird');
+
 const { Reports, sequelize } = require('../db');
-const { helpers: { delay } } = require('../modules');
 
 const reports = [{
     "emergency": true,
@@ -139,22 +142,24 @@ sequelize.sync()
 	.catch(err => console.log(`Error creating reports: ${err}`));
 
 
-function postReportsRecursively(reports) {
+async function postReportsRecursively(reports) {
 
-	function recurseCreate(reports) {
-		Reports.create(reports[0])
-			.then(() => {
-				reports = reports.slice(1);
-				console.log('batch in! To go:', reports.length);
-				if (reports.length) {
-					return delay(200)
-						.then(() => recurseCreate(reports));
-				}
-				return Promise.resolve();
-			});
+	async function recurseCreate(reports) {
+		await Reports.create(reports[0]);
+
+		reports = reports.slice(1);
+		console.log('batch in! To go:', reports.length);
+
+		if (reports.length) {
+			await Promise.delay(200);
+			return recurseCreate(reports);
+		}
+        console.log('Reports seed complete!');
+		process.exit();
+
 	}
 
-	return Reports.truncate()
-		.then(() => recurseCreate(reports));
+	await Reports.truncate();
+	recurseCreate(reports);
 }
 

@@ -1,3 +1,5 @@
+'use strict';
+
 const Reports = require('./reports');
 const Buildings = require('./buildings');
 

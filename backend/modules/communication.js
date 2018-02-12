@@ -1,3 +1,5 @@
+'use strict';
+
 const request = require('request');
 const fs = require('fs');
 
@@ -20,13 +22,16 @@ exports.rp = options => {
 
 
 
-exports.getNearestZipcodes = (lat, lng) => {
-    return exports.rp({
-        method : 'GET',
-        uri : `http://api.geonames.org/findNearbyPostalCodesJSON?lat=${lat}&lng=${lng}&radius=1&maxRows=3&username=willzj`
-    })
-    .then(data => data.postalCodes.map(({ postalCode }) => Number(postalCode)))
-    .catch(err => console.log('Err getting nearest zipcodes', err));
+exports.getNearestZipcodes = async (lat, lng) => {
+    try {
+        const data = await exports.rp({
+            method : 'GET',
+            uri : `http://api.geonames.org/findNearbyPostalCodesJSON?lat=${lat}&lng=${lng}&radius=1&maxRows=3&username=willzj`
+        });
+        return data.postalCodes.map(({ postalCode }) => Number(postalCode))
+    } catch (err) {
+        console.log('Err getting nearest zipcodes', err)
+    }
 };
 
 

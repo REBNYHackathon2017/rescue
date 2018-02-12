@@ -1,3 +1,5 @@
+'use strict';
+
 const sequelize = require('./_db');
 
 const { Reports, Buildings } = require('./models');
