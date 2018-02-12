@@ -138,7 +138,6 @@ sequelize.sync()
 	.then(() => console.log('DB synced.'))
 	.then(() => postReportsRecursively(reports))
 	.then(() => Reports.findAll())
-	.then(reports => console.log(`${reports.length} created. Ex: ${reports[0].get()}`))
 	.catch(err => console.log(`Error creating reports: ${err}`));
 
 

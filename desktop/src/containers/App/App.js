@@ -18,7 +18,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        return axios.get(`http://18.216.36.119:3002/api/reports/`)
+        return axios.get(`backend/api/reports/`)
             .then(result => {
                 this.setState({ data: result.data }, () => {
                     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } } = { coords: {} }) => {
@@ -29,7 +29,7 @@ export default class App extends Component {
     }
 
     getAllReports = () => {
-        return axios.get(`http://18.216.36.119:3002/api/reports/`)
+        return axios.get(`backend/api/reports/`)
             .then((result) => {
                 return this.setState({
                     data: result.data.sort((prev, curr) => curr.createdAt - prev.createdAt)
@@ -38,7 +38,7 @@ export default class App extends Component {
     };
 
     updateReportStatus = (entryId, nextStatus) => {
-        return axios.put(`http://18.216.36.119:3002/api/reports/${entryId}`, {status: nextStatus})
+        return axios.put(`backend/api/reports/${entryId}`, {status: nextStatus})
             .then(() => this.getAllReports())
     };
 
