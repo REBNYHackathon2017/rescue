@@ -64,7 +64,7 @@ export default class App extends React.Component {
 	}
 
 	render() {
-		const { building, details, floor, id, issue, numFloors, resource } = this.state;
+		const { building, details, floor, id, issue, latitude, longitude, numFloors, resource } = this.state;
 		return (
 			<Screens
 				screenProps={{
@@ -74,6 +74,8 @@ export default class App extends React.Component {
 					floor,
 					id,
 					issue,
+					latitude,
+					longitude,
 					numFloors,
 					resource,
 					setValue: this.setValue
