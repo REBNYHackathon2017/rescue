@@ -24,34 +24,37 @@ function log(eventName, e) {
 class MarkerTypes extends React.Component {
   constructor(props) {
 	super(props);
-	const coords = {
-		latitude: LATITUDE + SPACE,
-		longitude: LONGITUDE + SPACE,
+	this.state = {
+		coords: {
+			latitude: this.props.coords.latitude || LATITUDE,
+			longitude: this.props.coords.longitude || LONGITUDE,
+		},
 	};
-	this.state = { coords };
   }
 
   setCoords = (e) => {
+	this.props.updateLocation(e.nativeEvent.coordinate);
 	this.setState({
 		coords: e.nativeEvent.coordinate,
 	});
   }
 
   render() {
+	  const { coords } = this.props;
 	return (
 	  <View style={styles.container}>
 		<MapView
 		  provider={this.props.provider}
 		  style={styles.map}
 		  initialRegion={{
-			latitude: LATITUDE,
-			longitude: LONGITUDE,
+			latitude: coords.latitude || LATITUDE,
+			longitude: coords.longitude || LONGITUDE,
 			latitudeDelta: LATITUDE_DELTA,
 			longitudeDelta: LONGITUDE_DELTA,
 		  }}
 		>
 		  <Marker
-			coordinate={this.state.coords}
+			coordinate={(coords.latitude && coords.longitude) ? coords : this.state.coords}
 			onSelect={(e) => log('onSelect', e)}
 			onDrag={(e) => log('onDrag', e)}
 			onDragStart={(e) => log('onDragStart', e)}
