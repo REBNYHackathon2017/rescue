@@ -33,10 +33,25 @@ export default class MapScreen extends React.Component {
 		navigate('Resources');
 	}
 
+	updateLocation = (coords) => {
+		const { setValue } = this.props.screenProps;
+		setValue('latitude', coords.latitude);
+		setValue('longitude', coords.longitude);
+	};
+
 	render() {
+		const { latitude, longitude } = this.props.screenProps;
+		const coords = {
+			latitude,
+			longitude,
+		};
 		return (
 			<View style={styles.container}>
-				<DraggableMarkers provider={PROVIDER_GOOGLE} />
+				<DraggableMarkers
+					coords={coords}
+					provider={PROVIDER_GOOGLE}
+					updateLocation={this.updateLocation}
+				/>
 				<Button onPress={this.changeScreen} text="CONFIRM LOCATION" />
 			</View>
 		);
