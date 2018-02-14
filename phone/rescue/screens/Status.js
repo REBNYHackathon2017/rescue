@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import io from 'socket.io-client';
@@ -79,7 +80,7 @@ export default class Status extends React.Component {
 				<View style={styles.reportGroup}>
 					<Text style={styles.header}>Your Emergency:</Text>
 					<Text style={styles.details}>{resource}, {issue}</Text>
-					<Text style={styles.details}>{building.toLowerCase()}, Floor {floor}</Text>
+					<Text style={styles.details}>{_.invoke(building, 'toLowerCase')}, Floor {floor}</Text>
 				</View>
 				<View style={styles.reportGroup}>
 					<Text style={styles.header}>Notes:</Text>
