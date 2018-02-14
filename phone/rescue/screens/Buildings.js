@@ -50,8 +50,8 @@ export default class Emergency extends React.Component {
 		if (location && location.coords && location.coords.latitude && location.coords.longitude) {
 			const lat = location.coords.latitude;
 			const long = location.coords.longitude;
-			this.props.screenProps.setValue('longitude', lat);
-			this.props.screenProps.setValue('latitude', long);
+			this.props.screenProps.setValue('latitude', lat);
+			this.props.screenProps.setValue('longitude', long);
 			buildings = this._getNearbyBuildingsAsync(lat, long);
 		}
 
