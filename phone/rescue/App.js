@@ -54,7 +54,7 @@ export default class App extends React.Component {
 			body: JSON.stringify(report),
 		};
 		try {
-			let response = await fetch('http://18.216.36.119:3002/api/reports/', config);
+			let response = await fetch('http://34.204.33.48:3002/api/reports/', config);
 			const parsed = JSON.parse(response._bodyText);
 			this.setState({ id: parsed.id });
 
