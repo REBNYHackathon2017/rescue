@@ -15,7 +15,7 @@ export default class List extends Component {
     };
 
     componentDidMount() {
-        const socket = io('backend');
+        const socket = io('http://34.204.33.48:3002');
         socket.on('create', data => {
             this.props.addReport(data);
             this.showAlert();

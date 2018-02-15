@@ -18,7 +18,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        return axios.get(`backend/api/reports/`)
+        return axios.get(`http://34.204.33.48:3002/api/reports/`)
             .then(result => {
                 this.setState({ data: result.data }, () => {
                     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } } = { coords: {} }) => {
@@ -29,16 +29,18 @@ export default class App extends Component {
     }
 
     getAllReports = () => {
-        return axios.get(`backend/api/reports/`)
+        return axios.get(`http://34.204.33.48:3002/api/reports/`)
             .then((result) => {
+                console.log('DATA??', result)
                 return this.setState({
                     data: result.data.sort((prev, curr) => curr.createdAt - prev.createdAt)
                 });
-            });
+            })
+            .catch(err => console.log('failed to get reports!', err));
     };
 
     updateReportStatus = (entryId, nextStatus) => {
-        return axios.put(`backend/api/reports/${entryId}`, {status: nextStatus})
+        return axios.put(`http://34.204.33.48:3002/api/reports/${entryId}`, {status: nextStatus})
             .then(() => this.getAllReports())
     };
 
