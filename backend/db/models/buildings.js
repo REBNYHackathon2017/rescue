@@ -40,13 +40,21 @@ const Buildings = sequelize.define('Buildings', {
 
 Buildings.findAllWithinZips = (zipCodes = []) => {
 	return Buildings.findAll({
-        where: {
-            zip: {
-                [Op.in]: zipCodes
-            }
-        },
-        raw: true
-	})
+    where: {
+        zip: {
+            [Op.in]: zipCodes
+        }
+    },
+    raw: true
+	});
+}
+
+
+Buildings.findByAddress = (address) => {
+	return Buildings.findAll({
+    where: { address },
+    raw: true
+	});
 }
 
 

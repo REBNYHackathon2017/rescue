@@ -2,21 +2,21 @@
 version: '3'
 
 services:
-  # frontend :
-  #   image: willzj/rebny_frontend:latest
-  #   container_name : frontend
-  #   ports:
-  #     - "3001:3001"
+  frontend :
+    image: anirray/rebny_frontend:latest
+    container_name : frontend
+    ports:
+      - "80:3001"
   backend :
-    image: willzj/rebny_backend:latest
+    image: anirray/rebny_backend:latest
     container_name : backend
     ports:
       - "3002:3002"
   db :
     image : postgres
     container_name: db
-    # volumes :
-    #   - /usr/src/app/data:/var/lib/postgresql/data
+    volumes :
+      - /usr/src/app/data:/var/lib/postgresql/data
     expose :
       - "5432"
     environment :

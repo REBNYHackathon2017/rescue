@@ -26,7 +26,7 @@ dataset.init()
 
 	  	stream.on('data', ({ Address, NumFloors, XCoord, YCoord, ZipCode, OwnerName, HealthArea, PolicePrct, FireComp } = {}) => {
 	  		const numberOfFloors = Math.floor(Number(NumFloors));
-	  		if (Address === '667 MADISON AVENUE') console.log('ITTT', Address, NumFloors, XCoord, YCoord, ZipCode, OwnerName, HealthArea, PolicePrct, FireComp);
+	  		if (Address === '655 MADISON AVENUE') ZipCode = 10065;
 	  		if (XCoord && YCoord && ZipCode && Address && numberOfFloors > 0) {
 
 	  			// Entry for the db (add zip and district)
@@ -62,6 +62,8 @@ function addLatLong(ddBuildingsArr) {
 	return ddBuildingsArr.map(buildingsArr => {
 		return buildingsArr.map(building => {
 			const [ longitude, latitude ] = proj4('EPSG:2263', 'WGS84', [ building.xCoord, building.yCoord ]);
+			// console.log(building.address)
+			if (building.address === '655 MADISON AVENUE') console.log('lng', longitude, 'lat', latitude);
 			return Object.assign({}, building, { longitude, latitude });
 		});
 	});

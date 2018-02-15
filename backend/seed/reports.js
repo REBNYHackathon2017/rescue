@@ -132,13 +132,26 @@ const reports = [{
     "status": "pending",
     "mobile": "7184659826",
     "name": "Al Goodman"
+},
+{
+    "emergency": true,
+    "latitude": "40.772360",
+    "longitude": "-73.982274",
+    "building": "1917 BROADWAY",
+    "floor": 0,
+    "resource": "medical",
+    "issue": "accident",
+    "details": "i fell and my hip hurts and i cant move",
+    "status": "resolved",
+    "mobile": "6467777777",
+    "name": "Jon Jones"
 }];
+
 
 sequelize.sync()
 	.then(() => console.log('DB synced.'))
 	.then(() => postReportsRecursively(reports))
 	.then(() => Reports.findAll())
-	.then(reports => console.log(`${reports.length} created. Ex: ${reports[0].get()}`))
 	.catch(err => console.log(`Error creating reports: ${err}`));
 
 
