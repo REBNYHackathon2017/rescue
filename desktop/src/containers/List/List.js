@@ -103,8 +103,11 @@ export default class List extends Component {
 
         const detailButton = (cell, row, enumObject, rowIndex) => {
             return (
-                <Link className={styles.link}
-                      to={`/list/${row.id}`}>Details ></Link>
+                <Link
+                    className={styles.link}
+                    to={`/list/${row.id}`}>
+                        Details >
+                </Link>
             );
         };
 

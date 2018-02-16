@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const reactSvgLoader = require('react-svg-loader');
 
 const config = {
   resolve: {
@@ -34,6 +35,28 @@ const config = {
           presets: ['react', 'env', 'stage-2'],
         },
       },
+    }, {
+      test: /\.css$/,
+      exclude: /node_modules/,
+      loader: 'css-loader',
+    }, {
+      test: /\.svg$/,
+      loaders: [
+        {
+          loader: 'babel-loader'
+        },
+        {
+          loader: 'react-svg-loader',
+          options: {
+            svgo: {
+              plugins: [
+                { removeTitle: false }
+              ],
+              floatPrecision: 2
+            }
+          }
+        }
+      ]
     }]
   },
   plugins: [

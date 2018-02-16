@@ -24,6 +24,7 @@ export default class Detail extends Component {
     };
 
     render() {
+        console.log('PARAMS', this.props.params.id, this.props.data)
         const formattedData = this.state.entryFromSameNumber.sort((perv, curr) => perv.createdAt - curr.createdAt).map((entry) => {
             let nextObj = {...entry};
             const updatedFields = {
@@ -39,6 +40,7 @@ export default class Detail extends Component {
             nextObj = Object.assign({}, nextObj, updatedFields);
             return nextObj;
         });
+        console.log('formattedData', formattedData);
 
         const circleStatus = (cell, row, enumObject, rowIndex) => {
             let statusCircle;
@@ -75,8 +77,11 @@ export default class Detail extends Component {
             onRowClick: updateDirectionToDisplay,
         };
 
+        let { selectedEntry } = this.state;
+
+        console.log('location', this.props.location, 'selectedEntry', selectedEntry);
         if (!this.props.location || !this.state.selectedEntry) return <div></div>
-        const { selectedEntry } = this.state;
+
         return (
             <div>
                 <style>{require('../List/styleHack')}</style>
@@ -123,7 +128,8 @@ export default class Detail extends Component {
                             </Col>
                             <h6>&nbsp;</h6>
                             {(this.state.entryFromSameNumber) ?
-                                <BootstrapTable data={formattedData} limit={3} keyField="id" striped={true}
+                                <BootstrapTable className="pointer"
+                                                data={formattedData} limit={3} keyField="id" striped={true}
                                                 hover={true} pagination headerStyle={{color: "red"}}
                                                 options={tableOptions}>
                                     <TableHeaderColumn dataField="status"
@@ -131,7 +137,8 @@ export default class Detail extends Component {
                                                        width="30"
                                                        dataAlign="center">
                                     </TableHeaderColumn>
-                                    <TableHeaderColumn dataField="emergency"
+                                    <TableHeaderColumn
+                                                       dataField="emergency"
                                                        dataSort={true}>Emergency
                                     </TableHeaderColumn>
                                     <TableHeaderColumn dataField="time"

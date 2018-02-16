@@ -11,3 +11,7 @@
     height: 15px;
     border-radius: 50%;
 }
+
+.pointer {
+  cursor: pointer;
+}
