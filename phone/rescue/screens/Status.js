@@ -111,15 +111,15 @@ export default class Status extends React.Component {
 					</View>
 					<View style={styles.statusLine}>
 						<Image
-							source={require('../assets/Asset-11.png')}
-							style={styles.statusIndicatorWaiting}
+							source={dispatched ? require('../assets/Asset-10.png') : require('../assets/Asset-11.png')}
+							style={dispatched ? styles.statusIndicatorCheck : styles.statusIndicatorWaiting}
 						/>
 						<Text style={dispatched ? styles.activeStatus : styles.status}>Responders Dispatched</Text>
 					</View>
 					<View style={styles.statusLine}>
 						<Image
-							source={require('../assets/Asset-11.png')}
-							style={styles.statusIndicatorWaiting}
+							source={resolved ? require('../assets/Asset-10.png') : require('../assets/Asset-11.png')}
+							style={resolved ? styles.statusIndicatorCheck : styles.statusIndicatorWaiting}
 						/>
 						<Text style={resolved ? styles.activeStatus : styles.status}>Emergency Resolved</Text>
 					</View>
