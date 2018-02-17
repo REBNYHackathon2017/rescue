@@ -1,21 +1,40 @@
 import React, {Component} from 'react';
-import {Grid, Row, Col} from 'react-bootstrap';
+import {Grid, Row, Col, ButtonGroup, Button} from 'react-bootstrap';
 import MapDirections from '../../components/MapDirections';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import license from '../../assets/license.png';
-const moment = require('moment-timezone');
+import * as moment from 'moment-timezone';
+import { browserHistory } from 'react-router'
 
 
 export default class Detail extends Component {
 
     state = {
-        entryFromSameNumber: []
+        reportsFromSameMobile: [],
+        showMap: true
     };
 
     componentDidMount() {
-        const selectedEntry = this.props.data.filter((entry) => Number(entry.id) === Number(this.props.params.id))[0];
-        const entryFromSameNumber = (selectedEntry && selectedEntry.length) ? this.props.data.filter((entry) => selectedEntry[0].mobile === entry.mobile) : this.props.data.slice();
-        this.setState({ selectedEntry, entryFromSameNumber });
+        const { params, getAllReports } = this.props;
+
+        getAllReports()
+            .then(() => {
+                const report = this.props.reports.filter(({ id }) => Number(id) === Number(params.id))[0];
+                const reportsFromSameMobile = (report && this.props.reports.length) ?
+                    this.props.reports.filter(r => report.mobile === r.mobile) :
+                    this.props.reports;
+
+                this.setState({ report, reportsFromSameMobile });
+            })
+            .catch(err => console.log('Error setting state in details page!', err));
+    }
+
+    toMap() {
+        this.setState({ showMap: true })
+    }
+
+    toPhoto() {
+        this.setState({ showMap: false })
     }
 
     formatNumber = (mobile) => {
@@ -24,23 +43,24 @@ export default class Detail extends Component {
     };
 
     render() {
-        console.log('PARAMS', this.props.params.id, this.props.data)
-        const formattedData = this.state.entryFromSameNumber.sort((perv, curr) => perv.createdAt - curr.createdAt).map((entry) => {
-            let nextObj = {...entry};
+        const { location } = this.props;
+
+        const formattedData = this.state.reportsFromSameMobile.sort((perv, curr) => perv.createdAt - curr.createdAt).map(r => {
+            let nextObj = {...r};
             const updatedFields = {
-                id: entry.id,
-                name: entry.name,
-                location: entry.building,
-                response: entry.resource,
-                emergency: `${entry.resource} > ${entry.issue}`,
-                status: entry.status,
-                time: moment(entry.createdAt).tz('America/New_York').format('MMMM Do YYYY, h:mm a'),
+                id: r.id,
+                name: r.name,
+                location: r.building,
+                response: r.resource,
+                emergency: `${r.resource} > ${r.issue}`,
+                status: r.status,
+                time: moment(r.createdAt).tz('America/New_York').format('MMMM Do YYYY, h:mm a'),
             };
 
             nextObj = Object.assign({}, nextObj, updatedFields);
             return nextObj;
         });
-        console.log('formattedData', formattedData);
+
 
         const circleStatus = (cell, row, enumObject, rowIndex) => {
             let statusCircle;
@@ -58,8 +78,9 @@ export default class Detail extends Component {
             return statusCircle;
         };
 
-        const updateDirectionToDisplay = (row) => {
-            this.setState({selectedEntry: row});
+        const updateDirectionToDisplay = (report) => {
+            browserHistory.push(`/list/${report.id}`);
+            this.setState({ report });
         };
 
         function sortTime(a, b, order) {   // order is desc or asc
@@ -77,10 +98,26 @@ export default class Detail extends Component {
             onRowClick: updateDirectionToDisplay,
         };
 
-        let { selectedEntry } = this.state;
+        let { report } = this.state;
 
-        console.log('location', this.props.location, 'selectedEntry', selectedEntry);
-        if (!this.props.location || !this.state.selectedEntry) return <div></div>
+        if (!this.props.location || !this.state.report) return <div></div>
+
+        const imgSrc = report.image || 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg';
+        const mapPanel = this.state.showMap ?
+            <MapDirections
+                data={this.state.reportsFromSameMobile}
+                origin={location}
+                destination={this.state.report}
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6Lhim26T6_uUFuofmuNuA1xfTQwj8J6A&v=3.exp&libraries=geometry,drawing,places"
+                loadingElement={<div style={{height: `100%`}}/>}
+                containerElement={<div style={{height: `550px`}}/>}
+                mapElement={<div style={{height: `100%`}}/>}
+            /> :
+            <img
+                width="100%"
+                alt="Not a kitten"
+                src={imgSrc}
+            />
 
         return (
             <div>
@@ -91,7 +128,7 @@ export default class Detail extends Component {
                             <div className="center">
                                 <img height="180" src={license} alt="license"/>
                             </div>
-                            <span className="center"><h4>{selectedEntry.name} - {this.formatNumber(selectedEntry.mobile) || `(848) 284-3328`}</h4></span>
+                            <span className="center"><h4>{report.name} - {this.formatNumber(report.mobile) || `(848) 284-3328`}</h4></span>
                             <hr/>
                             <Col md={12}>
                                 <Col md={6}>
@@ -127,7 +164,7 @@ export default class Detail extends Component {
                                 </Col>
                             </Col>
                             <h6>&nbsp;</h6>
-                            {(this.state.entryFromSameNumber) ?
+                            {(this.state.reportsFromSameMobile) ?
                                 <BootstrapTable className="pointer"
                                                 data={formattedData} limit={3} keyField="id" striped={true}
                                                 hover={true} pagination headerStyle={{color: "red"}}
@@ -151,16 +188,12 @@ export default class Detail extends Component {
                             }
                         </Col>
                         <Col md={6}>
-                            <h4>Responding To: <span className="selectedLink">{selectedEntry.resource}> {selectedEntry.issue}</span></h4>
-                            <MapDirections
-                                data={this.state.entryFromSameNumber}
-                                origin={this.props.location}
-                                destination={this.state.selectedEntry}
-                                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6Lhim26T6_uUFuofmuNuA1xfTQwj8J6A&v=3.exp&libraries=geometry,drawing,places"
-                                loadingElement={<div style={{height: `100%`}}/>}
-                                containerElement={<div style={{height: `550px`}}/>}
-                                mapElement={<div style={{height: `100%`}}/>}
-                            />
+                            <h4>Responding To: <span className="selectedLink">{report.resource}> {report.issue}</span></h4>
+                            <ButtonGroup className="moose">
+                                <Button onClick={this.toMap.bind(this)}>Map</Button>
+                                <Button onClick={this.toPhoto.bind(this)}>Photo</Button>
+                            </ButtonGroup>
+                            { mapPanel }
                         </Col>
                     </Row>
                 </Grid>
