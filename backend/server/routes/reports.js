@@ -1,3 +1,5 @@
+'use strict';
+
 const router = require('express').Router();
 
 const { Reports } = require('../../db');
@@ -16,7 +18,7 @@ router.use('/:reportId', (req, res, next) => {
 				req.report = report;
 				next();
 			}
-			else next()
+			else next();
 		})
 		.catch(next);
 });
@@ -32,6 +34,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
 	initializeIO();
 	let newReport;
+
 	Reports.create(req.body, { returning: true })
 		.then(report => {
 			newReport = report.get();

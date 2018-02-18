@@ -2,6 +2,6 @@
 
 const env = process.env.NODE_ENV;
 
-module.exports = (env === 'test') ? 
-	require('./test') : 
-	require('./production');
+module.exports = (env === 'production') ? 
+  require('./production') :
+	require('./test');

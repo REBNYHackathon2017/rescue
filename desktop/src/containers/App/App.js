@@ -1,49 +1,49 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import logo from '../../assets/Asset_3_logo.svg';
 import list from '../../assets/Asset_2_list.svg';
 import main from '../../assets/Asset_4_map.svg';
 import details from '../../assets/Asset_1_setting.svg';
 import './App.css';
-import {Navbar, Button} from 'react-bootstrap';
+import { Navbar, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { config } from '../../config';
+const { backend } = config;
+
 
 export default class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            reports: [],
             statusSort: 'all',
         }
     }
 
     componentDidMount() {
-        return axios.get(`http://18.216.36.119:3002/api/reports/`)
-            .then(result => {
-                this.setState({ data: result.data }, () => {
-                    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } } = { coords: {} }) => {
-                        this.setState({ location: { lat: latitude, lng: longitude } }, () => console.log('SET'));
-                    });
-                })
-            });
+        navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } } = { coords: {} }) => {
+            this.setState({ location: { lat: latitude, lng: longitude } });
+        });
     }
 
     getAllReports = () => {
-        return axios.get(`http://18.216.36.119:3002/api/reports/`)
-            .then((result) => {
-                return this.setState({
-                    data: result.data.sort((prev, curr) => curr.createdAt - prev.createdAt)
-                });
-            });
+        return axios.get(`${backend}/api/reports/`)
+            .then(result => 
+                this.setState({
+                    reports: result.data.sort((prev, curr) => curr.createdAt - prev.createdAt)
+                })
+            )
+            .catch(err => console.log('failed to get reports!', err));
     };
 
-    updateReportStatus = (entryId, nextStatus) => {
-        return axios.put(`http://18.216.36.119:3002/api/reports/${entryId}`, {status: nextStatus})
+    updateReportStatus = (entryId, newStatus) => {
+        axios.put(`${backend}/api/reports/${entryId}`, { status: newStatus })
             .then(() => this.getAllReports())
+            .catch(err => console.log('failed to update report status!', err));
     };
 
-    updateStatusSort = (status) => {
-        this.setState({statusSort: status});
+    updateStatusSort = (statusSort) => {
+        this.setState({ statusSort });
     };
 
     render() {
@@ -124,14 +124,15 @@ export default class App extends Component {
                         </Navbar.Form>
                     </Navbar.Collapse>
                 </Navbar>
-                < div >
-                    {this.props.children && React.cloneElement(this.props.children, {
-                        updateReportStatus: this.updateReportStatus,
-                        statusSort: this.state.statusSort,
-                        data: this.state.data,
-                        addReport: this.getAllReports,
-                        location: this.state.location
-                    })
+                <div>
+                    {this.props.children && React.cloneElement(this.props.children,
+                        {
+                            updateReportStatus: this.updateReportStatus,
+                            getAllReports: this.getAllReports,
+                            statusSort: this.state.statusSort,
+                            reports: this.state.reports,
+                            location: this.state.location
+                        })
                     }
                 </div>
             </div>

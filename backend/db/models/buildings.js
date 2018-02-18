@@ -1,4 +1,7 @@
+'use strict';
+
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const sequelize = require('../_db');
 
@@ -37,13 +40,21 @@ const Buildings = sequelize.define('Buildings', {
 
 Buildings.findAllWithinZips = (zipCodes = []) => {
 	return Buildings.findAll({
-        where: {
-            zip: {
-                $in: zipCodes
-            }
-        },
-        raw: true
-	})
+    where: {
+        zip: {
+            [Op.in]: zipCodes
+        }
+    },
+    raw: true
+	});
+}
+
+
+Buildings.findByAddress = (address) => {
+	return Buildings.findAll({
+    where: { address },
+    raw: true
+	});
 }
 
 

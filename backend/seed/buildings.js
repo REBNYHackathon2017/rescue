@@ -1,9 +1,12 @@
+'use strict';
+
+const Promise = require('bluebird');
+
 const Bytes = require('nyc-bytes');
 const proj4 = require('proj4');
 const request = require('request');
 
 const { Buildings, sequelize } = require('../db');
-const { helpers: { delay } } = require('../modules');
 
 /*
 	Basic Signature
@@ -23,7 +26,7 @@ dataset.init()
 
 	  	stream.on('data', ({ Address, NumFloors, XCoord, YCoord, ZipCode, OwnerName, HealthArea, PolicePrct, FireComp } = {}) => {
 	  		const numberOfFloors = Math.floor(Number(NumFloors));
-	  		if (Address === '335 MADISON AVENUE') console.log('ITTT', Address, NumFloors, XCoord, YCoord, ZipCode, OwnerName, HealthArea, PolicePrct, FireComp);
+	  		if (Address === '655 MADISON AVENUE') ZipCode = 10065;
 	  		if (XCoord && YCoord && ZipCode && Address && numberOfFloors > 0) {
 
 	  			// Entry for the db (add zip and district)
@@ -44,13 +47,12 @@ dataset.init()
 	  		}
 	  	});
 
-	  	stream.on('end', () => {
-	  		console.log(`\nGot ${buildings.length} buildings!`);
+	  	stream.on('end', async () => {
+	  		console.log(`\nGot ${buildings.length} batches to insert in DB!`);
 	  		buildings = addLatLong(buildings);
 
-	  		postBuildingsRecursively(buildings)
-	  			.then(() => console.log('\nDone!'))
-	  			.catch(err => console.log('Error POSTing buildings to db: ', err));
+	  		await postBuildingsRecursively(buildings);
+	  		console.log('\nBuilding seed complete!');
 	  	});
 
 	})
@@ -60,30 +62,38 @@ function addLatLong(ddBuildingsArr) {
 	return ddBuildingsArr.map(buildingsArr => {
 		return buildingsArr.map(building => {
 			const [ longitude, latitude ] = proj4('EPSG:2263', 'WGS84', [ building.xCoord, building.yCoord ]);
-			building.latitude = latitude;
-			building.longitude = longitude;
-			return building;
+			// console.log(building.address)
+			if (building.address === '655 MADISON AVENUE') console.log('lng', longitude, 'lat', latitude);
+			return Object.assign({}, building, { longitude, latitude });
 		});
 	});
 }
 
-function postBuildingsRecursively(buildings) {
 
-	function recurseCreate(batches) {
-		Buildings.bulkCreate(batches[0])
-			.then(() => {
-				console.log('batch in! To go:', batches.length - 1);
-				batches = batches.slice(1);
-				if (batches.length) {
-					return delay(200)
-						.then(() => recurseCreate(batches));
-				}
-				return Promise.resolve();
-			});
+async function postBuildingsRecursively(buildings) {
+
+	async function recurseCreate(batches) {
+		try {		
+			await Buildings.bulkCreate(batches[0]);
+
+			batches = batches.slice(1);
+			console.log('batch in! To go:', batches.length);
+
+			if (batches.length) {
+				await Promise.delay(200);
+				return recurseCreate(batches);
+			}
+	        console.log('Buildings seed complete!');
+			process.exit();
+		} catch(err) {
+			console.log('Error inserting buildings', err);
+			process.exit();
+		}
+
 	}
 
-	return Buildings.sync({ force: true })
-		.then(() => recurseCreate(buildings));
+	await Buildings.sync({ force: true });
+	recurseCreate(buildings);
 }
 
 

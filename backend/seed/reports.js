@@ -1,5 +1,8 @@
+'use strict';
+
+const Promise = require('bluebird');
+
 const { Reports, sequelize } = require('../db');
-const { helpers: { delay } } = require('../modules');
 
 const reports = [{
     "emergency": true,
@@ -12,7 +15,8 @@ const reports = [{
     "details": "wallet gone from my desk.",
     "status": "resolved",
     "mobile": "6467778888",
-    "name": "Marsha No-Wallet"
+    "name": "Marsha No-Wallet",
+    "image": 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg'
 },
 {
     "emergency": true,
@@ -25,7 +29,8 @@ const reports = [{
     "details": "the IT guys are fighting again!",
     "status": "resolved",
     "mobile": "6467779999",
-    "name": "Ivanna B'Cool"
+    "name": "Ivanna B'Cool",
+    "image": 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg'
 },
 {
     "emergency": true,
@@ -38,7 +43,8 @@ const reports = [{
     "details": "fight in the lobby",
     "status": "pending",
     "mobile": "6468889999",
-    "name": "Susan O'Notsafe"
+    "name": "Susan O'Notsafe",
+    "image": 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg'
 },
 {
     "emergency": true,
@@ -51,7 +57,8 @@ const reports = [{
     "details": "it is smokey i'm passing out now bye.",
     "status": "resolved",
     "mobile": "0987654321",
-    "name": "Barbara McHottoes"
+    "name": "Barbara McHottoes",
+    "image": 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg'
 },
 {
     "emergency": true,
@@ -64,7 +71,8 @@ const reports = [{
     "details": "my dog is in there",
     "status": "pending",
     "mobile": "9187098963",
-    "name": "Gloria Sunrise"
+    "name": "Gloria Sunrise",
+    "image": 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg'
 },
 {
     "emergency": true,
@@ -77,7 +85,8 @@ const reports = [{
     "details": "my moms having a heart attack room 204",
     "status": "resolved",
     "mobile": "5554890010",
-    "name": "Mark Thisspot"
+    "name": "Mark Thisspot",
+    "image": 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg'
 },{
     "emergency": true,
     "latitude": "40.758129",
@@ -89,7 +98,8 @@ const reports = [{
     "details": "burn from burst pipe in boiler room",
     "status": "dispatched",
     "mobile": "6197852893",
-    "name": "Bill Lange"
+    "name": "Bill Lange",
+    "image": 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg'
 },
 {
     "emergency": true,
@@ -102,7 +112,8 @@ const reports = [{
     "details": "husband cant feel left side. hurry room 1848",
     "status": "dispatched",
     "mobile": "2122225533",
-    "name": "Tara Tactyl"
+    "name": "Tara Tactyl",
+    "image": 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg'
 },
 {
     "emergency": true,
@@ -115,7 +126,8 @@ const reports = [{
     "details": "i think my husband is having a stroke",
     "status": "resolved",
     "mobile": "2122225533",
-    "name": "Tara Tactyl"
+    "name": "Tara Tactyl",
+    "image": 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg'
 },
 {
     "emergency": true,
@@ -128,33 +140,50 @@ const reports = [{
     "details": "guy bleeding on sidewalk outside front entrance",
     "status": "pending",
     "mobile": "7184659826",
-    "name": "Al Goodman"
+    "name": "Al Goodman",
+    "image": 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg'
+},
+{
+    "emergency": true,
+    "latitude": "40.772360",
+    "longitude": "-73.982274",
+    "building": "1917 BROADWAY",
+    "floor": 0,
+    "resource": "medical",
+    "issue": "accident",
+    "details": "i fell and my hip hurts and i cant move",
+    "status": "resolved",
+    "mobile": "6467777777",
+    "name": "Jon Jones",
+    "image": 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg'
 }];
+
 
 sequelize.sync()
 	.then(() => console.log('DB synced.'))
 	.then(() => postReportsRecursively(reports))
 	.then(() => Reports.findAll())
-	.then(reports => console.log(`${reports.length} created. Ex: ${reports[0].get()}`))
 	.catch(err => console.log(`Error creating reports: ${err}`));
 
 
-function postReportsRecursively(reports) {
+async function postReportsRecursively(reports) {
 
-	function recurseCreate(reports) {
-		Reports.create(reports[0])
-			.then(() => {
-				reports = reports.slice(1);
-				console.log('batch in! To go:', reports.length);
-				if (reports.length) {
-					return delay(200)
-						.then(() => recurseCreate(reports));
-				}
-				return Promise.resolve();
-			});
+	async function recurseCreate(reports) {
+		await Reports.create(reports[0]);
+
+		reports = reports.slice(1);
+		console.log('batch in! To go:', reports.length);
+
+		if (reports.length) {
+			await Promise.delay(200);
+			return recurseCreate(reports);
+		}
+        console.log('Reports seed complete!');
+		process.exit();
+
 	}
 
-	return Reports.truncate()
-		.then(() => recurseCreate(reports));
+	await Reports.truncate();
+	recurseCreate(reports);
 }
 

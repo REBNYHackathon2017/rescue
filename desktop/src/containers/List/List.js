@@ -1,26 +1,15 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import io from 'socket.io-client';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Link} from 'react-router';
 import AlertContainer from 'react-alert';
 import phone from '../../assets/alert_phone.png';
-const moment = require('moment-timezone');
+import * as moment from 'moment-timezone';
+import { config } from '../../config';
+const { backend } = config;
+
 
 export default class List extends Component {
-    static propTypes = {
-        getAllReports: PropTypes.func,
-        updateReportStatus: PropTypes.func,
-        data: PropTypes.array,
-        statusSort:PropTypes.string,
-    };
-
-    componentDidMount() {
-        const socket = io('http://18.216.36.119:3002');
-        socket.on('create', data => {
-            this.props.addReport(data);
-            this.showAlert();
-        });
-    }
 
     constructor(props) {
         super(props);
@@ -34,12 +23,22 @@ export default class List extends Component {
         time: 5000,
         transition: 'scale'
     }
-     
+
+    componentDidMount() {
+        const socket = io(backend);
+        socket.on('create', data => {
+            this.props.addReport(data);
+            this.showAlert();
+        });
+
+        this.props.getAllReports();
+    }
+
     showAlert = () => {
         this.msg.show('New Emergency Report', {
           time: 2000,
           type: 'error',
-          icon: <img height="32" width="32" src={phone} />
+          icon: <img alt="license" height="32" width="32" src={phone} />
         })
     }
 
@@ -61,11 +60,11 @@ export default class List extends Component {
     };
 
 
-
     render() {
+        const { reports, statusSort } = this.props;
         const styles = require('./List.scss');
 
-        let formattedData = this.props.data.sort((prev, curr) => curr.createdAt - prev.createdAt).map((entry) => {
+        let formattedData = reports.sort((prev, curr) => curr.createdAt - prev.createdAt).map((entry) => {
             return {
                 id: entry.id,
                 name: entry.name,
@@ -78,7 +77,7 @@ export default class List extends Component {
             }
         });
 
-        if (this.props.statusSort !== 'all') formattedData = formattedData.filter((entry) => entry.status === this.props.statusSort);
+        if (statusSort !== 'all') formattedData = formattedData.filter((entry) => entry.status === statusSort);
 
         const cellButton = (cell, row, enumObject, rowIndex) => {
             let theButton;
@@ -103,8 +102,11 @@ export default class List extends Component {
 
         const detailButton = (cell, row, enumObject, rowIndex) => {
             return (
-                <Link className={styles.link}
-                      to={`/list/${row.id}`}>Details ></Link>
+                <Link
+                    className={styles.link}
+                    to={`/list/${row.id}`}>
+                        Details >
+                </Link>
             );
         };
 
