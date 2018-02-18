@@ -102,7 +102,6 @@ export default class Detail extends Component {
 
         if (!this.props.location || !this.state.report) return <div></div>
 
-        const imgSrc = report.image || 'https://sdhumane.org/wp-content/uploads/2017/06/10k_nova-0.jpg';
         const mapPanel = this.state.showMap ?
             <MapDirections
                 data={this.state.reportsFromSameMobile}
@@ -115,8 +114,8 @@ export default class Detail extends Component {
             /> :
             <img
                 width="100%"
-                alt="Not a kitten"
-                src={imgSrc}
+                alt="Image of incident"
+                src={this.state.report.img}
             />
 
         return (
