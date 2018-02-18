@@ -38,8 +38,6 @@ const styles = StyleSheet.create({
 		color: 'gray',
 		fontSize: 26,
 		fontWeight: 'bold',
-		paddingBottom: 10,
-		paddingTop: 10,
 	},
 	statusGroup: {
 		alignItems: 'flex-start',
@@ -56,7 +54,6 @@ const styles = StyleSheet.create({
 	statusIndicatorWaiting: {
 		height: 30,
 		marginRight: 10,
-		marginTop: 11,
 		width: 30,
 	},
 	statusLine: {
