@@ -23,9 +23,10 @@ const styles = StyleSheet.create({
 	input: {
 		borderColor: 'gray',
 		borderWidth: 1,
-		marginBottom: 15,
 		fontSize: 18,
-		width: 310,
+		marginBottom: 15,
+		padding: 5,
+		width: 300,
 	},
 	label: {
 		marginBottom: 10,
