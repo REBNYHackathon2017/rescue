@@ -36,6 +36,10 @@ export default class App extends Component {
             .catch(err => console.log('failed to get reports!', err));
     };
 
+    addReport = (data) => {
+        this.setState({ reports: [data, ...this.state.reports] });
+    }
+
     updateReportStatus = (entryId, newStatus) => {
         axios.put(`${backend}/api/reports/${entryId}`, { status: newStatus })
             .then(() => this.getAllReports())
@@ -129,6 +133,7 @@ export default class App extends Component {
                         {
                             updateReportStatus: this.updateReportStatus,
                             getAllReports: this.getAllReports,
+                            addReport: this.addReport,
                             statusSort: this.state.statusSort,
                             reports: this.state.reports,
                             location: this.state.location
