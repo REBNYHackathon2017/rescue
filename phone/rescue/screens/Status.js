@@ -59,7 +59,7 @@ export default class Status extends React.Component {
 	}
 
 	componentDidMount() {
-		const socket = io('http://18.216.36.119:3002');
+		const socket = io('http://34.204.33.48:3002');
         socket.on('update', data => {
 			if (data.id === this.props.screenProps.id) {
 				if (data.status === 'dispatched') {
