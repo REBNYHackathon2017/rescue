@@ -17,14 +17,15 @@ export default class App extends Component {
         this.state = {
             reports: [],
             statusSort: 'all',
+            location: { lat: 40.784600, lng: -73.942717 }
         }
     }
 
-    componentDidMount() {
-        navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } } = { coords: {} }) => {
-            this.setState({ location: { lat: latitude, lng: longitude } });
-        });
-    }
+    // componentDidMount() {
+    //     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } } = { coords: {} }) => {
+    //         this.setState({ location: { lat: latitude, lng: longitude } });
+    //     });
+    // }
 
     getAllReports = () => {
         return axios.get(`${backend}/api/reports/`)
@@ -35,6 +36,10 @@ export default class App extends Component {
             )
             .catch(err => console.log('failed to get reports!', err));
     };
+
+    addReport = (data) => {
+        this.setState({ reports: [data, ...this.state.reports] });
+    }
 
     updateReportStatus = (entryId, newStatus) => {
         axios.put(`${backend}/api/reports/${entryId}`, { status: newStatus })
@@ -129,6 +134,7 @@ export default class App extends Component {
                         {
                             updateReportStatus: this.updateReportStatus,
                             getAllReports: this.getAllReports,
+                            addReport: this.addReport,
                             statusSort: this.state.statusSort,
                             reports: this.state.reports,
                             location: this.state.location

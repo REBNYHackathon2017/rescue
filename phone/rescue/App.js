@@ -53,6 +53,7 @@ export default class App extends React.Component {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(report),
 		};
+		console.log('This is _submitReport and config.body', config.body);
 		try {
 			let response = await fetch('http://34.204.33.48:3002/api/reports/', config);
 			const parsed = JSON.parse(response._bodyText);

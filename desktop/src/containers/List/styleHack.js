@@ -1,3 +1,5 @@
+// import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+
 const styleText = `/*editor error animate*/
 /*@import "~toastr/build/toastr.min.css";*/
 
@@ -319,6 +321,15 @@ td.react-bs-table-expand-cell {
   border-right-style: none !important;
   border-left-style: none !important;
 }
+
+.react-bs-container-body tr {
+  border-top-style: hidden !important;
+}
+
+.react-bs-container-header tr {
+  border-bottom-style: hidden !important;
+}
+
 `;
 
 module.exports = styleText;
