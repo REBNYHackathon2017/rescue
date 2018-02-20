@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { Image, Keyboard, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { FormLabel } from 'react-native-elements'
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import { Constants, Location, Permissions, ImagePicker } from "expo";
@@ -15,14 +15,25 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 	},
+	image: {
+		height: 200,
+		marginBottom: 15,
+		width: 200,
+	},
 	input: {
 		borderColor: 'gray',
 		borderWidth: 1,
+		marginBottom: 15,
 		fontSize: 18,
 		width: 310,
 	},
 	label: {
 		marginBottom: 10,
+	},
+	sendContainer: {
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'flex-end',
 	},
 	title: {
 		color: 'gray',
@@ -63,8 +74,11 @@ export default class Details extends React.Component {
 			);
 	}
 
+	blur = () => {
+		Keyboard.dismiss();
+	}
 
-  sendDetails = () => {
+	sendDetails = () => {
 		const { text } = this.state;
 		const { navigate } = this.props.navigation;
 		const { setValue } = this.props.screenProps;
@@ -173,18 +187,21 @@ export default class Details extends React.Component {
 	render() {
 		const { text } = this.state;
 		return (
-			<View style={styles.container}>
+			<TouchableOpacity onPress={this.blur} style={styles.container}>
 				<FormLabel labelStyle={styles.title}>Emergency Details</FormLabel>
-		{this.state.img && (
-					<Image
-						source={{ uri: this.state.img }}
-						style={{ width: 200, height: 200 }}
-					/>
-		)}
+				{this.state.img ? (
+						<Image
+							source={{ uri: this.state.img }}
+							style={styles.image}
+						/>
+					) : <Text />
+				}
 				<AutoGrowingTextInput style={styles.input} onChangeText={this.updateDetails} placeholder={'Additional information (optional)'} />
 				<Button onPress={this.pickImage} text="Take Picture of Incident"/>
-				<Button onPress={this.sendDetails} text="SEND OUT MY SOS" />
-			</View>
+				<View style={styles.sendContainer}>
+					<Button onPress={this.sendDetails} text="SEND OUT MY SOS" />
+				</View>
+			</TouchableOpacity>
 		);
 	}
 }
