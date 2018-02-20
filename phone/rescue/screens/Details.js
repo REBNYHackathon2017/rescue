@@ -198,7 +198,7 @@ export default class Details extends React.Component {
 					) : <Text />
 				}
 				<AutoGrowingTextInput style={styles.input} onChangeText={this.updateDetails} placeholder={'Additional information (optional)'} />
-				<Button onPress={this.pickImage} text="Take Picture of Incident"/>
+				<Button onPress={this.pickImage} text="TAKE PICTURE OF INCIDENT"/>
 				<View style={styles.sendContainer}>
 					<Button onPress={this.sendDetails} text="SEND OUT MY SOS" />
 				</View>

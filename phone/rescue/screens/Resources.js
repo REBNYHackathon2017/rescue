@@ -3,12 +3,12 @@ import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 
 import Button from '../components/CustomButton';
 
-import medical from '../assets/Asset3.png';
-import fire from '../assets/Asset4_2.png';
-import police from '../assets/Asset5_3.png';
-import nature from '../assets/Asset6.png';
-import building from '../assets/Asset7.png';
-import other from '../assets/Asset8.png';
+import medical from '../assets/icons/medical.png';
+import fire from '../assets/icons/fire.png';
+import police from '../assets/icons/police.png';
+import nature from '../assets/icons/disaster.png';
+import building from '../assets/icons/building.png';
+import other from '../assets/icons/phone.png';
 
 const styles = StyleSheet.create({
 	container: {
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		padding: 10,
+		width: 300,
 	},
 	text: {
 		color: 'gray',
