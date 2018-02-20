@@ -7,10 +7,7 @@ import Button from '../components/CustomButton';
 const FAVORITE_LOCATIONS = [
 	'HOME',
 	'WORK',
-	'BOYFRIEND',
-	'BESTIE',
 	"MOM'S",
-	'SAKS'
 ];
 
 const styles = StyleSheet.create({
