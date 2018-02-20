@@ -151,7 +151,10 @@ export default class Details extends React.Component {
 
     const upload = await storageRef.put(pickerResultAsByteArray, metadata);
 
-    this.setState({ installation_img: upload.downloadURL });
+    const { setValue } = this.props.screenProps;
+    setValue('img', upload.downloadURL);
+
+    this.setState({ img: upload.downloadURL });
   };
 
 	submit = () => {
@@ -169,9 +172,9 @@ export default class Details extends React.Component {
 		return (
 			<View style={styles.container}>
 				<FormLabel labelStyle={styles.title}>Emergency Details</FormLabel>
-        {this.state.installation_img && (
+        {this.state.img && (
 					<Image
-						source={{ uri: this.state.installation_img }}
+						source={{ uri: this.state.img }}
 						style={{ width: 200, height: 200 }}
 					/>
         )}

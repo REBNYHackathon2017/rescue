@@ -38,6 +38,7 @@ export default class Emergency extends React.Component {
 
 	_getLocationAsync = async () => {
 		let { status } = await Permissions.askAsync(Permissions.LOCATION);
+		console.log('This is status', status);
 		if (status !== 'granted') {
 			this.setState({
 				errorMessage: 'Permission to access location was denied',
@@ -59,8 +60,9 @@ export default class Emergency extends React.Component {
 	};
 
 	_getNearbyBuildingsAsync = async (lat, long) => {
+		console.log('THis is lat and long', lat, long);
 		try {
-			let response = await fetch(`http://18.216.36.119:3002/api/buildings/near?lat=${lat}&lng=${long}`);
+			let response = await fetch(`http://34.204.33.48:3002/api/buildings/near?lat=${lat}&lng=${long}`);
 			let responseJson = await response.json();
 			this.setState({ buildings: responseJson });
 			return responseJson;
