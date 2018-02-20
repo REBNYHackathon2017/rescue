@@ -21,10 +21,12 @@ const styles = StyleSheet.create({
 		backgroundColor: 'transparent',
 		fontSize: 22,
 		marginBottom: 20,
+		textAlign: 'center',
 	},
 	question: {
 		fontSize: 22,
 		fontWeight: 'bold',
+		textAlign: 'center',
 	},
 	textGroup: {
 		alignItems: 'center',
@@ -68,10 +70,7 @@ export default class Emergency extends React.Component {
 				<View style={styles.container}>
 					<View style={styles.textGroup}>
 						<Text style={styles.opener}>Does Your Emergency Pose an Immediate Threat to Someone’s:</Text>
-						<Text style={styles.question}>Life</Text>
-						<Text style={styles.question}>Safety</Text>
-						<Text style={styles.question}>Health</Text>
-						<Text style={styles.question}>or Property?</Text>
+						<Text style={styles.question}>Life, Safety, Health, or Property?</Text>
 					</View>
 					<Button color="gray" text="NO" />
 					<Button onPress={this.isEmergency} text="YES" />
