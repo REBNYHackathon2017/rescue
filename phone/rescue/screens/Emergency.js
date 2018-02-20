@@ -1,16 +1,24 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 
 import Button from '../components/CustomButton';
 
+import background from '../assets/background.png';
+
 const styles = StyleSheet.create({
+	backgroundImage: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
 		alignItems: 'center',
+		backgroundColor: 'transparent',
 		justifyContent: 'center',
 	},
 	opener: {
+		backgroundColor: 'transparent',
 		fontSize: 22,
 		marginBottom: 20,
 	},
@@ -56,17 +64,19 @@ export default class Emergency extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
-				<View style={styles.textGroup}>
-					<Text style={styles.opener}>Does Your Emergency Pose an Immediate Threat to Someone’s:</Text>
-					<Text style={styles.question}>Life</Text>
-					<Text style={styles.question}>Safety</Text>
-					<Text style={styles.question}>Health</Text>
-					<Text style={styles.question}>or Property?</Text>
+			<ImageBackground source={background} style={styles.backgroundImage}>
+				<View style={styles.container}>
+					<View style={styles.textGroup}>
+						<Text style={styles.opener}>Does Your Emergency Pose an Immediate Threat to Someone’s:</Text>
+						<Text style={styles.question}>Life</Text>
+						<Text style={styles.question}>Safety</Text>
+						<Text style={styles.question}>Health</Text>
+						<Text style={styles.question}>or Property?</Text>
+					</View>
+					<Button color="gray" text="NO" />
+					<Button onPress={this.isEmergency} text="YES" />
 				</View>
-				<Button color="gray" text="NO" />
-				<Button onPress={this.isEmergency} text="YES" />
-			</View>
+			</ImageBackground>
 		);
 	}
 }
