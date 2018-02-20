@@ -82,7 +82,7 @@ export default class Details extends React.Component {
 			}
 		}, 500);
 		navigate('Status');
-	};
+	}
 
 	pickImage = async () => {
 		const result = await ImagePicker.launchCameraAsync({
@@ -99,10 +99,10 @@ export default class Details extends React.Component {
 
 			this._uploadAsByteArray(byteArray);
 		}
-	};
+	}
 
 	// Helper Function https://github.com/aaronksaunders/expo-rn-firebase-image-upload/blob/master/README.md
-	convertToByteArray = input => {
+	convertToByteArray = (input) => {
 		const binary_string = this.atob(input);
 		const len = binary_string.length;
 		const bytes = new Uint8Array(len);
@@ -110,9 +110,9 @@ export default class Details extends React.Component {
 			bytes[i] = binary_string.charCodeAt(i);
 		}
 		return bytes;
-	};
+	}
 
-	atob = input => {
+	atob = (input) => {
 		const chars =
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
@@ -136,7 +136,7 @@ export default class Details extends React.Component {
 		}
 
 		return output;
-	};
+	}
 
   //  Upload function https://github.com/aaronksaunders/expo-rn-firebase-image-upload/blob/master/README.md
 	_uploadAsByteArray = async pickerResultAsByteArray => {
@@ -158,17 +158,17 @@ export default class Details extends React.Component {
 		setValue('img', upload.downloadURL);
 
 		this.setState({ img: upload.downloadURL });
-  };
+	}
 
 	submit = () => {
 		clearInterval(this.waitForState);
 		const { _submitReport } = this.props.screenProps;
 		_submitReport();
-	};
+	}
 
 	updateDetails = (text) => {
 		this.setState({ text });
-	};
+	}
 
 	render() {
 		const { text } = this.state;
