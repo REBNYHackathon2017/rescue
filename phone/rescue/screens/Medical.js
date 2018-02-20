@@ -10,7 +10,7 @@ const ISSUES = [
 	'SICKNESS',
 	'BIRTH',
 	'ALIEN ABDUCTION',
-	'SOMETHING ELSE',
+	'UNKNOWN',
 ];
 
 const styles = StyleSheet.create({
