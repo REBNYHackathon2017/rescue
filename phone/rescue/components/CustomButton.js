@@ -18,7 +18,7 @@ export default class CustomButton extends React.Component {
 		return (
 			<View>
 				<Button
-					backgroundColor={color === 'gray' ? 'gray' : 'red'}
+					backgroundColor={color === 'gray' ? 'gray' : '#e10006'}
 					buttonStyle={{
 						alignSelf: 'center',
 						height: 50,
