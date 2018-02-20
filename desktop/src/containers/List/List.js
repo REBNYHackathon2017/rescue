@@ -62,7 +62,6 @@ export default class List extends Component {
 
     render() {
         const { reports, statusSort } = this.props;
-        const styles = require('./List.scss');
 
         let formattedData = reports.sort((prev, curr) => curr.createdAt - prev.createdAt).map((entry) => {
             return {
@@ -103,7 +102,6 @@ export default class List extends Component {
         const detailButton = (cell, row, enumObject, rowIndex) => {
             return (
                 <Link
-                    className={styles.link}
                     to={`/list/${row.id}`}>
                         Details >
                 </Link>

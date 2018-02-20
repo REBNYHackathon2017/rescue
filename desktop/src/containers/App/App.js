@@ -17,14 +17,15 @@ export default class App extends Component {
         this.state = {
             reports: [],
             statusSort: 'all',
+            location: { lat: 40.784600, lng: -73.942717 }
         }
     }
 
-    componentDidMount() {
-        navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } } = { coords: {} }) => {
-            this.setState({ location: { lat: latitude, lng: longitude } });
-        });
-    }
+    // componentDidMount() {
+    //     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } } = { coords: {} }) => {
+    //         this.setState({ location: { lat: latitude, lng: longitude } });
+    //     });
+    // }
 
     getAllReports = () => {
         return axios.get(`${backend}/api/reports/`)
