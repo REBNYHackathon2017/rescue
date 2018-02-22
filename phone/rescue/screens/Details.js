@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Keyboard, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Image, Keyboard, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import { FormLabel } from 'react-native-elements'
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import { Constants, Location, Permissions, ImagePicker } from "expo";
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		flexDirection: 'column',
-		backgroundColor: '#fff',
+		backgroundColor: 'transparent',
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 	},
@@ -188,21 +188,23 @@ export default class Details extends React.Component {
 	render() {
 		const { text } = this.state;
 		return (
-			<TouchableOpacity onPress={this.blur} style={styles.container}>
-				<FormLabel labelStyle={styles.title}>Emergency Details</FormLabel>
-				{this.state.img ? (
-						<Image
-							source={{ uri: this.state.img }}
-							style={styles.image}
-						/>
-					) : <Text />
-				}
-				<AutoGrowingTextInput style={styles.input} onChangeText={this.updateDetails} placeholder={'Additional information (optional)'} />
-				<Button onPress={this.pickImage} text="TAKE PICTURE OF INCIDENT"/>
-				<View style={styles.sendContainer}>
-					<Button onPress={this.sendDetails} text="SEND OUT MY SOS" />
+			<TouchableWithoutFeedback onPress={this.blur}>
+				<View style={styles.container}>
+					<FormLabel labelStyle={styles.title}>Emergency Details</FormLabel>
+					{this.state.img ? (
+							<Image
+								source={{ uri: this.state.img }}
+								style={styles.image}
+							/>
+						) : <Text />
+					}
+					<AutoGrowingTextInput style={styles.input} onChangeText={this.updateDetails} placeholder={'Additional information (optional)'} />
+					<Button onPress={this.pickImage} text="TAKE PICTURE OF INCIDENT"/>
+					<View style={styles.sendContainer}>
+						<Button onPress={this.sendDetails} text="SEND OUT MY SOS" />
+					</View>
 				</View>
-			</TouchableOpacity>
+			</TouchableWithoutFeedback>
 		);
 	}
 }
